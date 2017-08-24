@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.sexspider4">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".site.SiteActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".list.ListActivity"
+            android:label="@string/activity_list" />
+        <activity
+            android:name=".list.ListAllDownActivity"
+            android:label="@string/txt_title_isdown" />
+        <activity
+            android:name=".list.ListFavoriteActivity"
+            android:label="@string/txt_title_favorite" />
+        <activity
+            android:name=".list.ListRecommendActivity"
+            android:label="@string/txt_title_recommend" />
+        <activity
+            android:name=".list.ListNotReadActivity"
+            android:label="@string/txt_title_notread" />
+        <activity
+            android:name=".list.ListSearchActivity"
+            android:label="@string/txt_title_search" />
+        <activity
+            android:name=".image.ImageActivity"
+            android:label="@string/activity_image" />
+        <activity
+            android:name=".search.SearchActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:label="@string/activity_search" />
+    </application>
+
+</manifest>

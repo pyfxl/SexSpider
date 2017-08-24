@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true">
+        <shape android:shape="oval" >
+            <solid android:color="@color/colorAccent" />
+            <size android:width="@dimen/float_button_height" android:height="@dimen/float_button_height" />
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="oval" >
+            <solid android:color="@color/colorAccent_trans" />
+            <size android:width="@dimen/float_button_height" android:height="@dimen/float_button_height" />
+        </shape>
+    </item>
+
+</selector>

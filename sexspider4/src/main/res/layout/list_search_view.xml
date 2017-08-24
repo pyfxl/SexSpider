@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/constraintLayout">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/list_text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/txt_list_title"
+        android:id="@+id/search_list_title"
+        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        app:layout_constraintRight_toRightOf="@+id/constraintLayout"
+        android:layout_marginStart="@dimen/list_item_margin"
+        android:layout_marginEnd="@dimen/list_item_margin" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_list_delete"
+        android:src="@android:drawable/ic_delete"
+        android:contentDescription="@string/txt_delete"
+        app:layout_constraintTop_toTopOf="@+id/search_list_title"
+        app:layout_constraintRight_toRightOf="@+id/search_list_title"
+        app:layout_constraintBottom_toBottomOf="@+id/search_list_title" />
+
+</android.support.constraint.ConstraintLayout>

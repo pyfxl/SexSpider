@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">sexspider4</string>
+    <string name="txt_empty">&#160;</string>
+    <string name="txt_delete">删除</string>
+    <string name="txt_title">标题</string>
+
+    <string name="txt_dialog_title">请选择您的操作</string>
+    <string name="txt_dialog_delete">删除此项</string>
+    <string name="txt_dialog_redown">重新下载</string>
+
+    <string name="txt_menu_refresh">刷新列表</string>
+    <string name="txt_menu_search">查找下载</string>
+    <string name="txt_menu_canceldown">取消下载</string>
+    <string name="txt_menu_viewisdown">查看下载列表</string>
+    <string name="txt_menu_viewalldown">查看所有下载</string>
+    <string name="txt_menu_favorite_set">设置喜爱列表</string>
+    <string name="txt_menu_favorite">查看喜爱列表</string>
+    <string name="txt_menu_recommend">查看推荐列表</string>
+    <string name="txt_menu_viewnotread">查看未读列表</string>
+    <string name="txt_menu_jumptobottom">到底部或顶部</string>
+
+    <string name="txt_title_isdown">下载列表</string>
+    <string name="txt_title_searchresult">查找结果</string>
+    <string name="txt_title_search">查找列表</string>
+    <string name="txt_title_favorite">喜爱列表</string>
+    <string name="txt_title_recommend">推荐列表</string>
+    <string name="txt_title_notread">未读列表</string>
+
+    <string name="txt_list_title">列表标题</string>
+    <string name="txt_list_empty">下拉刷新列表。</string>
+    <string name="txt_list_empty_normal">列表内容为空。</string>
+    <string name="txt_list_refreshfirst">请先刷新列表。</string>
+    <string name="txt_list_refresh">正在刷新列表...</string>
+    <string name="txt_list_success">列表刷新成功。</string>
+    <string name="txt_list_noupdate">无内容更新。</string>
+    <string name="txt_list_error">列表刷新失败！</string>
+    <string name="txt_list_isloading">列表刷新中不能操作。</string>
+    <string name="txt_list_loadnext">向上拉加载第%1$s页。</string>
+    <string name="txt_list_loadnum">0</string>
+    <string name="txt_list_recommend_start">开始获取推荐列表...</string>
+    <string name="txt_list_recommend_end">推荐列表获取成功。</string>
+
+    <string name="txt_site_isupdated">√</string>
+    <string name="txt_site_noupdated">X</string>
+    <string name="txt_site_hasupdated">△</string>
+    <string name="txt_site_newupdated">▲</string>
+    <string name="txt_site_loading">↓</string>
+
+    <string name="txt_image_thumb">图片</string>
+    <string name="txt_image_downing">图片正在下载中。</string>
+    <string name="txt_image_downstart">开始下载当前图片。</string>
+    <string name="txt_image_downerror">图片下载失败，请重新下载！</string>
+    <string name="txt_image_downcomplete">图片下载完成。</string>
+    <string name="txt_image_downcancel">图片下载已取消。</string>
+    <string name="txt_image_hasdown">图片下载中不能操作。</string>
+    <string name="txt_image_canceling">正在取消图片下载...</string>
+    <string name="txt_image_nodown">没有要下载的图片。</string>
+    <string name="txt_image_favorite_success">添加喜爱成功。</string>
+    <string name="txt_image_favorite_cancel">取消喜爱成功。</string>
+
+    <string name="activity_list">列表</string>
+    <string name="activity_image">图片</string>
+    <string name="activity_search">查找</string>
+
+</resources>
