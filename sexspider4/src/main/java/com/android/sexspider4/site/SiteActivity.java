@@ -1,6 +1,8 @@
 package com.android.sexspider4.site;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.android.sexspider4.BaseActivity;
 import com.android.sexspider4.DividerItemDecoration;
 import com.android.sexspider4.R;
+import com.android.sexspider4.helper.ImageHelper;
 import com.android.sexspider4.list.ListActivity;
 import com.android.sexspider4.list.ListAllDownActivity;
 import com.android.sexspider4.list.ListFavoriteActivity;
@@ -304,17 +307,31 @@ public class SiteActivity extends BaseActivity implements ISiteView {
 
     //批量加载列表数据
     private void loadListData() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for(int i=0, n=lists.size(); i<n; i++) {
-                    SiteBean site = lists.get(i);
-                    if(site == null) continue;
-                    site.isFirst = 1;//指定第一页
-                    sitePresenter.loadListDataBySite(site);
-                }
+        AlertDialog.Builder dialog = new AlertDialog.Builder(SiteActivity.this);
+        dialog.setMessage(R.string.txt_dialog_auto_title);
+        //不加载
+        dialog.setNegativeButton(R.string.txt_dialog_auto_no, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.cancel();
             }
-        }).start();
+        });
+        //加载
+        dialog.setPositiveButton(R.string.txt_dialog_auto_yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for(int i=0, n=lists.size(); i<n; i++) {
+                            SiteBean site = lists.get(i);
+                            if(site == null) continue;
+                            site.isFirst = 1;//指定第一页
+                            sitePresenter.loadListDataBySite(site);
+                        }
+                    }
+                }).start();
+            }
+        });
+        dialog.show();
     }
 
     @Override
