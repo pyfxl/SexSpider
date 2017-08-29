@@ -167,7 +167,9 @@ public class HtmlHelper {
             Document doc = Jsoup.parse(str);
             Elements content = doc.select(list.siteInfo.pageDiv);
             for (Element ele : content) {
-                if (!ele.text().matches("^\\d*$")) continue;
+                if(!ele.text().equals("")) {
+                    if (!ele.text().matches("^\\d*$")) continue;
+                }
 
                 String _link = ele.attr("href");
                 if (isEmptyLink(_link)) continue;

@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class GetImageFilter implements IFilter {
     @Override
     public String doFilter(String str) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         String role = "([^\\s=]+)=(['\"\"\\s]?)([^'\"\"]+)\\2(?=\\s|$|>)";
         Pattern pattern = Pattern.compile(role);
         Matcher matcher = pattern.matcher(str);
@@ -22,7 +22,7 @@ public class GetImageFilter implements IFilter {
             map.put(matcher.group(1), matcher.group(3));
         }
 
-        List<String> lists = new ArrayList<String>();
+        List<String> lists = new ArrayList<>();
         lists.add("file");
         lists.add("data-original");
         lists.add("data-src");

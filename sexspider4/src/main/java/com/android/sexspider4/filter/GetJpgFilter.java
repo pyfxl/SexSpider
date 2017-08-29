@@ -7,6 +7,6 @@ package com.android.sexspider4.filter;
 public class GetJpgFilter implements IFilter {
     @Override
     public String doFilter(String str) {
-        return str.replaceAll("\\?.*?([^\\\"]+)", "");
+        return str.replaceAll("\\?.*?([^\"]+)", "");
     }
 }
