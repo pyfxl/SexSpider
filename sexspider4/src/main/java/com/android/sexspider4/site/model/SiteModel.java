@@ -83,6 +83,7 @@ public class SiteModel implements ISite {
                 site.pageLevel = jsonObject.getString("pagelevel");
                 site.pageDiv = jsonObject.getString("pagediv");
                 site.pageFilter = jsonObject.getString("pagefilter");
+                site.docType = jsonObject.getString("doctype");
 
                 if (isUpdate) {
                     siteAccess.update(site);

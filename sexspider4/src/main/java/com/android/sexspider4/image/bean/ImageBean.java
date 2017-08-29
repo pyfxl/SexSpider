@@ -11,6 +11,7 @@ public class ImageBean {
     public int listId;
     public int siteId;
     public int isDown;
+    public String imageNotes;
 
     public ImageBean() {
     }

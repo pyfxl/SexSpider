@@ -80,7 +80,7 @@ public class ListAccess extends BaseAccess {
 
     //根据siteId查询所有下载列表
     public List<ListBean> queryAllDownById(int siteId) {
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite "
+        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite, A.ListNotes "
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE A.SiteID = ? AND A.IsDown <> 0 ORDER BY A.ListNum ASC, A.ListID DESC";
 
         return queryByString(sql, new String[] { String.valueOf(siteId) });
@@ -113,25 +113,29 @@ public class ListAccess extends BaseAccess {
             while (cursor.moveToNext()) {
                 SiteBean site = new SiteBean();
                 ListBean entity = new ListBean();
-                entity.listId = cursor.getInt(0);
-                entity.listTitle = cursor.getString(1);
-                entity.listLink = cursor.getString(2);
-                site.siteId = cursor.getInt(3);
-                entity.isDown = cursor.getInt(4);
-                entity.isDowning = cursor.getInt(5);
-                entity.isShow = cursor.getInt(6);
-                entity.isRead = cursor.getInt(7);
-                entity.isNew = cursor.getInt(8);
-                site.imageDiv = cursor.getString(9);
-                site.imageFilter = cursor.getString(10);
-                site.pageEncode = cursor.getString(11);
-                site.domain = cursor.getString(12);
-                site.pageDiv = cursor.getString(13);
-                site.pageFilter = cursor.getString(14);
-                site.pageLevel = cursor.getString(15);
-                entity.listPicture = cursor.getString(16);
-                entity.isFavorite = cursor.getInt(17);
+                entity.listId = cursor.getInt(cursor.getColumnIndex("ListID"));
+                entity.listTitle = cursor.getString(cursor.getColumnIndex("ListTitle"));
+                entity.listLink = cursor.getString(cursor.getColumnIndex("ListLink"));
+                site.siteId = cursor.getInt(cursor.getColumnIndex("SiteID"));
+                entity.isDown = cursor.getInt(cursor.getColumnIndex("IsDown"));
+                entity.isDowning = cursor.getInt(cursor.getColumnIndex("IsDowning"));
+                entity.isShow = cursor.getInt(cursor.getColumnIndex("IsShow"));
+                entity.isRead = cursor.getInt(cursor.getColumnIndex("IsRead"));
+                entity.isNew = cursor.getInt(cursor.getColumnIndex("IsNew"));
+                site.imageDiv = cursor.getString(cursor.getColumnIndex("ImageDiv"));
+                site.imageFilter = cursor.getString(cursor.getColumnIndex("ImageFilter"));
+                site.pageEncode = cursor.getString(cursor.getColumnIndex("PageEncode"));
+                site.domain = cursor.getString(cursor.getColumnIndex("Domain"));
+                site.pageDiv = cursor.getString(cursor.getColumnIndex("PageDiv"));
+                site.pageFilter = cursor.getString(cursor.getColumnIndex("PageFilter"));
+                site.pageLevel = cursor.getString(cursor.getColumnIndex("PageLevel"));
+                entity.listPicture = cursor.getString(cursor.getColumnIndex("ListPicture"));
+                entity.isFavorite = cursor.getInt(cursor.getColumnIndex("IsFavorite"));
                 entity.siteInfo = site;
+
+                if(cursor.getColumnIndex("Notes") > 0) {
+                    entity.listNotes = cursor.getString(cursor.getColumnIndex("ListNotes"));
+                }
 
                 list.add(entity);
             }
@@ -151,6 +155,7 @@ public class ListAccess extends BaseAccess {
         values.put("SiteID", list.siteInfo.siteId);
         values.put("ListNum", list.listNum);
         values.put("IsNew", list.isNew);
+        values.put("ListNotes", list.listNotes);
 
         try {
             db.insert(TABLE_LIST, null, values);

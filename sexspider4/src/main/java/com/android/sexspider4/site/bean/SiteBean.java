@@ -27,6 +27,8 @@ public class SiteBean {
     public int isFirst = 0;
     public int isUpdated;//0 未更新，1 成功，2 失败，3 有内容，4 有更新
     public int isDowning;
+    public String docType;
+    public String siteNotes;
 
     public String getSiteTitleAndDomain() {
         return siteRank + ". " + siteName + " " + StringUtils.substringLeft(domain.replaceAll("http://|https://", ""), "/");

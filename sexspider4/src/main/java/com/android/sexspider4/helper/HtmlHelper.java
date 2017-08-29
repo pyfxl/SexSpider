@@ -4,6 +4,8 @@ import com.android.sexspider4.filter.FilterChain;
 import com.android.sexspider4.list.bean.ListBean;
 import com.android.sexspider4.site.bean.SiteBean;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -59,7 +61,7 @@ public class HtmlHelper {
     //取列表内容数组
     public static List<String[]> getListArrayFromHtml(SiteBean site, List<String> delDics) {
         //取网页内容
-        String str = HttpHelper.getStringFromLink(site.siteLink, site.pageEncode);
+        String str = HttpHelper.getStringFromLink(site.siteLink, site.pageEncode, site.domain);
 
         List<String[]> result = new ArrayList<>();
         if(str.equals("")) return result;
@@ -74,18 +76,33 @@ public class HtmlHelper {
         FilterChain filter = new FilterChain(site.listFilter);
 
         try {
-            //取实际内容
-            Document doc = Jsoup.parse(str);
-            Elements content = doc.select(site.listDiv);
-            for (Element ele : content) {
-                String[] arr = new String[2];
-                arr[0] = filter.doFilter(ele.html());
-                arr[1] = setLink(ele.attr("href"), site.domain);
+            if (site.docType.equals("json")) {
+                JSONObject jsonObject = new JSONObject(str);
+                JSONArray jsonArray = jsonObject.getJSONArray(site.listDiv);
 
-                if (arr[0] == null) continue;
-                if (arr[0].equals("")) continue;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject obj = jsonArray.getJSONObject(i);
+                    String strs = filter.doFilter(obj.toString());
+                    String[] arr = strs.split(",");
+                    arr[1] = setLink(arr[1], site.domain);
 
-                result.add(arr);
+                    result.add(arr);
+                }
+            } else {
+                //取实际内容
+                Document doc = Jsoup.parse(str);
+                Elements content = doc.select(site.listDiv);
+                for (Element ele : content) {
+                    String[] arr = new String[4];
+                    arr[0] = filter.doFilter(ele.html());
+                    arr[1] = setLink(ele.attr("href"), site.domain);
+                    arr[2] = site.domain;
+                    arr[3] = "";
+
+                    if (isEmptyLink(arr[0])) continue;
+
+                    result.add(arr);
+                }
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -97,7 +114,7 @@ public class HtmlHelper {
     //取图片内容
     public static List<String> getImageArrayFromHtml(ListBean list) {
         //取网页内容
-        String str = HttpHelper.getStringFromLink(list.getListLink(), list.siteInfo.pageEncode);
+        String str = HttpHelper.getStringFromLink(list.getListLink(), list.siteInfo.pageEncode, list.siteInfo.domain);
 
         List<String> result = new ArrayList<>();
         if (str.equals("")) return result;
@@ -117,8 +134,7 @@ public class HtmlHelper {
                     _link = ele.attr("src");
                 }
 
-                if (_link == null) continue;
-                if (_link.equals("")) continue;
+                if (isEmptyLink(_link)) continue;
 
                 String _image = setLink(_link, list.siteInfo.domain);
 
@@ -134,7 +150,7 @@ public class HtmlHelper {
     //取分页内容
     public static List<String> getPageArrayFromHtml(ListBean list) {
         //取网页内容
-        String str = HttpHelper.getStringFromLink(list.getListLink(), list.siteInfo.pageEncode);
+        String str = HttpHelper.getStringFromLink(list.getListLink(), list.siteInfo.pageEncode, list.siteInfo.domain);
 
         List<String> result = new ArrayList<>();
         if (str.equals("")) return result;
@@ -154,10 +170,9 @@ public class HtmlHelper {
                 if (!ele.text().matches("^\\d*$")) continue;
 
                 String _link = ele.attr("href");
-                if (_link == null) continue;
-                if (_link.equals("#")) continue;
+                if (isEmptyLink(_link)) continue;
 
-                result.add(setLink(_link, domain));
+                result.add(setLink(_link, domain, list.siteInfo.domain));
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -168,10 +183,26 @@ public class HtmlHelper {
 
     //设置url全部
     private static String setLink(String url, String domain) {
-        if(url.startsWith("http")) {
+        if (url.startsWith("http")) {
             return url;
         }
+
+        url = url.replace("./", "").replace("../", "");
+
         return domain + url;
+    }
+
+    //设置url全部
+    private static String setLink(String url, String _domain, String domain) {
+        if (url.startsWith("http")) {
+            return url;
+        } else if (url.startsWith("/")) {
+            return domain + url;
+        }
+
+        url = url.replace("./", "").replace("../", "");
+
+        return _domain + url;
     }
 
     public static List<String> getPageMany(String url, List<String> pages) {
@@ -200,5 +231,13 @@ public class HtmlHelper {
         }
 
         return result;
+    }
+
+    private static boolean isEmptyLink(String _link) {
+        if (_link == null) return true;
+        if (_link.equals("")) return true;
+        if (_link.equals("#")) return true;
+
+        return false;
     }
 }

@@ -106,6 +106,7 @@ public class ListModelImpl implements IListModel {
         List<String> delDics = searchAccess.queryDicsByType(4);
 
         //取列表数据
+        String notes = "";
         List<String[]> lists = HtmlHelper.getListArrayFromHtml(site, delDics);
         for (String[] arr : lists) {
             ListBean list = new ListBean();
@@ -117,6 +118,8 @@ public class ListModelImpl implements IListModel {
             list.listTitle = arr[0];
             list.listLink = arr[1];
             list.siteInfo = site;
+            list.listNotes = arr[3];
+            notes = arr[3];
 
             newLists.add(list);
         }
@@ -138,6 +141,7 @@ public class ListModelImpl implements IListModel {
                 }
 
                 site.isUpdated = 4;
+                site.siteNotes = notes;
                 listener.onListLoadSuccess();
 
                 if (site.isFirst == 1 && site.listNum == 1) {

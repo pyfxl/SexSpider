@@ -737,7 +737,11 @@ public class ListActivity extends BaseActivity implements IListView {
     //取下一页列表
     protected void setNextPageToSite() {
         String link = siteLink.substring(0, siteLink.lastIndexOf("/") + 1);
-        site.siteLink = link + site.listPage.replace("(*)", String.valueOf(site.listNum));
+        if (site.siteId == 58) {
+            site.siteLink = link + site.listPage.replace("(*)", String.valueOf(site.listNum-1)).replace("(%)", site.siteNotes);
+        } else {
+            site.siteLink = link + site.listPage.replace("(*)", String.valueOf(site.listNum));
+        }
     }
 
     //刷新按钮

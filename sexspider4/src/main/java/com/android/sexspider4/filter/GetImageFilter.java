@@ -1,6 +1,8 @@
 package com.android.sexspider4.filter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,6 +22,16 @@ public class GetImageFilter implements IFilter {
             map.put(matcher.group(1), matcher.group(3));
         }
 
-        return map.containsKey("file") ? map.get("file") : map.containsKey("data-original") ? map.get("data-original") : map.get("src");
+        List<String> lists = new ArrayList<String>();
+        lists.add("file");
+        lists.add("data-original");
+        lists.add("data-src");
+        lists.add("src");
+
+        for(String s : lists) {
+            if(map.containsKey(s)) return map.get(s);
+        }
+
+        return "";
     }
 }

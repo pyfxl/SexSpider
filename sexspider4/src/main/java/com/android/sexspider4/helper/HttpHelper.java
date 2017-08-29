@@ -9,6 +9,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.SocketAddress;
 import java.net.URL;
 
 /**
@@ -22,15 +25,16 @@ public class HttpHelper {
     }
 
     public static String getStringFromLink(String link) {
-        return getStringFromLink(link, "utf-8");
+        return getStringFromLink(link, "utf-8", "http://www.fxlweb.com");
     }
 
-    public static String getStringFromLink(String link, String encode) {
+    public static String getStringFromLink(String link, String encode, String domain) {
         StringBuilder content = new StringBuilder();
         try {
             URL url = new URL(link);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("User-Agent", MyApplication.USER_AGENT);
+            connection.setRequestProperty("Referer", domain);
             connection.setConnectTimeout(MyApplication.DEFAULT_TIMEOUT);
             connection.setReadTimeout(MyApplication.DEFAULT_TIMEOUT);
 
@@ -63,7 +67,7 @@ public class HttpHelper {
             URL url = new URL(link);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("User-Agent", MyApplication.USER_AGENT);
-            connection.setRequestProperty("referer", domain);
+            connection.setRequestProperty("Referer", domain);
             connection.setConnectTimeout(MyApplication.DEFAULT_TIMEOUT);
             connection.setReadTimeout(MyApplication.DEFAULT_TIMEOUT);
 

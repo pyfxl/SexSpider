@@ -23,6 +23,7 @@ public class ListBean {
     public int listRank;
     public int isNew;
     public SiteBean siteInfo;
+    public String listNotes;
 
     public String getListLink() {
         return listLink.startsWith("http") ? listLink : siteInfo.domain + listLink;
