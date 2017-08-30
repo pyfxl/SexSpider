@@ -24,6 +24,7 @@ public class ListBean {
     public int isNew;
     public SiteBean siteInfo;
     public String listNotes;
+    public String listTotal;
 
     public String getListLink() {
         return listLink.startsWith("http") ? listLink : siteInfo.domain + listLink;

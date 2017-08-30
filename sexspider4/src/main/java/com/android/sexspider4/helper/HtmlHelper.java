@@ -176,6 +176,12 @@ public class HtmlHelper {
 
                 result.add(setLink(_link, domain, list.siteInfo.domain));
             }
+
+            //取总页数
+            content = doc.select(list.siteInfo.pageFilter);
+            for (Element ele : content) {
+                list.listTotal = ele.html().replaceAll("[^\\d]", "");
+            }
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -207,7 +213,7 @@ public class HtmlHelper {
         return _domain + url;
     }
 
-    public static List<String> getPageMany(String url, List<String> pages) {
+    public static List<String> getPageMany(String url, List<String> pages, String total) {
         List<String> result = new ArrayList<>();
 
         int lastPos = url.lastIndexOf("/");
@@ -226,7 +232,13 @@ public class HtmlHelper {
         String lastPage = pages.get(pages.size() - 1);
         String pageStr = lastPage.replace(newUrl, "");
 
-        int pageNum = Integer.parseInt(pageStr.replaceAll("[^\\d]", ""));
+        int pageNum = 0;
+        if (!total.equals("")) {
+            pageNum = Integer.parseInt(total);
+        } else {
+            pageNum = Integer.parseInt(pageStr.replaceAll("[^\\d]", ""));
+        }
+
         for(int i = 2; i <= pageNum; i++) {
             String newStr = pageStr.replaceAll("\\d+", String.valueOf(i));
             result.add(newUrl + newStr);
@@ -238,8 +250,28 @@ public class HtmlHelper {
     private static boolean isEmptyLink(String _link) {
         if (_link == null) return true;
         if (_link.equals("")) return true;
-        if (_link.equals("#")) return true;
+        return _link.equals("#");
 
-        return false;
+    }
+
+    public static String getPageTotal(ListBean list) {
+        //取网页内容
+        String str = HttpHelper.getStringFromLink(list.getListLink(), list.siteInfo.pageEncode, list.siteInfo.domain);
+
+        String result = "";
+        if (str.equals("")) return result;
+
+        try {
+            //取实际内容
+            Document doc = Jsoup.parse(str);
+            Elements content = doc.select(list.siteInfo.pageFilter);
+            for (Element ele : content) {
+                result = ele.html().replaceAll("[^\\d]", "");
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }

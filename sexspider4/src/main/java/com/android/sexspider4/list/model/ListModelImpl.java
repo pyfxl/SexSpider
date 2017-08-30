@@ -315,12 +315,15 @@ public class ListModelImpl implements IListModel {
                 //取得所有页面
                 pages = HtmlHelper.getPageArrayFromHtml(list);
 
-                if (list.siteInfo.pageLevel.equals("2")) {
-                    pages = HtmlHelper.getPageMany(list.listLink, pages);
+                if (list.siteInfo.pageLevel.equals("3")) { // 3 根据总页数
+                    //String total = HtmlHelper.getPageTotal(list);
+                    pages = HtmlHelper.getPageMany(list.listLink, pages, list.listTotal);
+                } else if (list.siteInfo.pageLevel.equals("2")) { // 2 根据分页最大页数
+                    pages = HtmlHelper.getPageMany(list.listLink, pages, "");
                 }
 
                 //添加主页面
-                pages.add(0, list.listLink);
+                pages.add(0, list.getListLink());
             }
 
             //取得所有图片
