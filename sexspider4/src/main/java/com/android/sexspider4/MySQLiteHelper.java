@@ -105,6 +105,6 @@ class MySQLiteHelper extends SQLiteOpenHelper {
                 + "IsDowning      INTEGER          DEFAULT 0, "
                 + "SiteDate       TIMESTAMP        DEFAULT (datetime('now', '+8 hour')), "
                 + "DocType        VARCHAR(10)      NULL, "
-                + "ListNotes      VARCHAR(200)     NULL) ");
+                + "SiteNotes      VARCHAR(200)     NULL) ");
     }
 }

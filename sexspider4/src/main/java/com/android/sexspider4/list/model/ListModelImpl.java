@@ -19,6 +19,7 @@ import com.android.sexspider4.site.db.SiteAccess;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by feng on 2017/5/5.
@@ -107,19 +108,19 @@ public class ListModelImpl implements IListModel {
 
         //取列表数据
         String notes = "";
-        List<String[]> lists = HtmlHelper.getListArrayFromHtml(site, delDics);
-        for (String[] arr : lists) {
+        List<Map<String, String>> lists = HtmlHelper.getListArrayFromHtml(site, delDics);
+        for (Map<String, String> map : lists) {
             ListBean list = new ListBean();
             list.listNum = (site.isFirst == 1 ? 1 : site.listNum);
             list.isDown = 0;
             list.isDowning = 0;
             list.isRead = 0;
             list.isShow = 1;
-            list.listTitle = arr[0];
-            list.listLink = arr[1];
+            list.listTitle = map.get("title");
+            list.listLink = map.get("link");
             list.siteInfo = site;
-            list.listNotes = arr[3];
-            notes = arr[3];
+            list.listNotes = map.get("note");
+            notes = map.get("note");
 
             newLists.add(list);
         }

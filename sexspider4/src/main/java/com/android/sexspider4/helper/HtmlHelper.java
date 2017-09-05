@@ -59,11 +59,11 @@ public class HtmlHelper {
     }
 
     //取列表内容数组
-    public static List<String[]> getListArrayFromHtml(SiteBean site, List<String> delDics) {
+    public static List<Map<String, String>> getListArrayFromHtml(SiteBean site, List<String> delDics) {
         //取网页内容
         String str = HttpHelper.getStringFromLink(site.siteLink, site.pageEncode, site.domain);
 
-        List<String[]> result = new ArrayList<>();
+        List<Map<String, String>> result = new ArrayList<>();
         if(str.equals("")) return result;
 
         //公共处理
@@ -76,32 +76,39 @@ public class HtmlHelper {
         FilterChain filter = new FilterChain(site.listFilter);
 
         try {
+            //json
             if (site.docType.equals("json")) {
+                String[] root = site.listDiv.split("\\|\\|");
                 JSONObject jsonObject = new JSONObject(str);
-                JSONArray jsonArray = jsonObject.getJSONArray(site.listDiv);
+                JSONArray jsonArray = jsonObject.getJSONArray(root[0]);
 
                 for (int i = 0; i < jsonArray.length(); i++) {
+                    String[] child = root[1].split("&");
                     JSONObject obj = jsonArray.getJSONObject(i);
-                    String strs = filter.doFilter(obj.toString());
-                    String[] arr = strs.split(",");
-                    arr[1] = setLink(arr[1], site.domain);
+                    Map<String, String> map = new HashMap<>();
+                    map.put("title", obj.getString(child[0]));
+                    map.put("link", setLink(obj.getString(child[1]), site.domain));
+                    if (child.length == 3)
+                        map.put("note", obj.getString(child[2]));
 
-                    result.add(arr);
+                    result.add(map);
                 }
             } else {
                 //取实际内容
                 Document doc = Jsoup.parse(str);
                 Elements content = doc.select(site.listDiv);
                 for (Element ele : content) {
-                    String[] arr = new String[4];
-                    arr[0] = filter.doFilter(ele.html());
-                    arr[1] = setLink(ele.attr("href"), site.domain);
-                    arr[2] = site.domain;
-                    arr[3] = "";
+                    String _title = filter.doFilter(ele.html());
 
-                    if (isEmptyLink(arr[0])) continue;
+                    //标题为空跳过
+                    if (isEmptyLink(_title)) continue;
 
-                    result.add(arr);
+                    Map<String, String> map = new HashMap<>();
+                    map.put("title", _title);
+                    map.put("link", setLink(ele.attr("href"), site.domain));
+                    map.put("note", "");
+
+                    result.add(map);
                 }
             }
         } catch(Exception e) {
