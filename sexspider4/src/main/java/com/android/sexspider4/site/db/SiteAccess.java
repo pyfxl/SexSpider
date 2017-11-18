@@ -103,6 +103,7 @@ public class SiteAccess extends BaseAccess {
         site.isDowning = cursor.getInt(cursor.getColumnIndex("IsDowning"));
         site.docType = cursor.getString(cursor.getColumnIndex("DocType"));
         site.siteNotes = cursor.getString(cursor.getColumnIndex("SiteNotes"));
+        site.lastStart = cursor.getString(cursor.getColumnIndex("LastStart"));
 
         return site;
     }
@@ -130,6 +131,7 @@ public class SiteAccess extends BaseAccess {
         values.put("SiteDate", DateUtils.getDateTime());
         values.put("DocType", site.docType);
         values.put("SiteNotes", site.siteNotes);
+        values.put("LastStart", site.lastStart);
     }
 
 }

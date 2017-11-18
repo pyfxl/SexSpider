@@ -730,15 +730,15 @@ public class ListActivity extends BaseActivity implements IListView {
     //设置振动
     protected void setVibrator() {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(1000);
+        vibrator.vibrate(new long[]{ 0, 100, 1000 }, 1);
         vibrator.cancel();
     }
 
     //取下一页列表
     protected void setNextPageToSite() {
         String link = siteLink.substring(0, siteLink.lastIndexOf("/") + 1);
-        if (site.siteId == 58) {
-            site.siteLink = link + site.listPage.replace("(*)", String.valueOf(site.listNum-1)).replace("(%)", site.siteNotes);
+        if (site.lastStart != null && !site.lastStart.equals("")) {
+            site.siteLink = link + site.listPage.replace("(*)", String.valueOf(site.listNum-1)).replace("(%)", site.lastStart);
         } else {
             site.siteLink = link + site.listPage.replace("(*)", String.valueOf(site.listNum));
         }

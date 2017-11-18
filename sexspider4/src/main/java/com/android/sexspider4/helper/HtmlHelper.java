@@ -89,7 +89,7 @@ public class HtmlHelper {
                     map.put("title", obj.getString(child[0]));
                     map.put("link", setLink(obj.getString(child[1]), site.domain));
                     if (child.length == 3)
-                        map.put("note", obj.getString(child[2]));
+                        map.put("last", obj.getString(child[2]));
 
                     result.add(map);
                 }
@@ -106,7 +106,7 @@ public class HtmlHelper {
                     Map<String, String> map = new HashMap<>();
                     map.put("title", _title);
                     map.put("link", setLink(ele.attr("href"), site.domain));
-                    map.put("note", "");
+                    map.put("last", "");
 
                     result.add(map);
                 }
@@ -201,6 +201,9 @@ public class HtmlHelper {
         if (url.startsWith("http")) {
             return url;
         }
+        if (url.startsWith("//")) {
+            return "http:" + url;
+        }
 
         url = url.replace("./", "").replace("../", "");
 
@@ -257,6 +260,7 @@ public class HtmlHelper {
     private static boolean isEmptyLink(String _link) {
         if (_link == null) return true;
         if (_link.equals("")) return true;
+        if (_link.contains("javascript")) return true;
         return _link.equals("#");
 
     }

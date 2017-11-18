@@ -29,6 +29,7 @@ public class SiteBean {
     public int isDowning;
     public String docType;
     public String siteNotes;
+    public String lastStart;
 
     public String getSiteTitleAndDomain() {
         return siteRank + ". " + siteName + " " + StringUtils.substringLeft(domain.replaceAll("http://|https://", ""), "/");

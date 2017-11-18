@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "sexspider4.db";
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
     private static final String SITE_TABLE = "SiteTable";
     private static final String LIST_TABLE = "ListTable";
     private static final String IMAGE_TABLE = "ImageTable";
@@ -78,6 +78,9 @@ class MySQLiteHelper extends SQLiteOpenHelper {
                     db.execSQL("ALTER TABLE " + LIST_TABLE + " ADD COLUMN ListNotes VARCHAR(200) NULL");
                     db.execSQL("ALTER TABLE " + IMAGE_TABLE + " ADD COLUMN ImageNotes VARCHAR(200) NULL");
                     break;
+                case 3:
+                    db.execSQL("ALTER TABLE " + SITE_TABLE + " ADD COLUMN LastStart VARCHAR(50) NULL");
+                    break;
             }
         }
     }
@@ -105,6 +108,7 @@ class MySQLiteHelper extends SQLiteOpenHelper {
                 + "IsDowning      INTEGER          DEFAULT 0, "
                 + "SiteDate       TIMESTAMP        DEFAULT (datetime('now', '+8 hour')), "
                 + "DocType        VARCHAR(10)      NULL, "
-                + "SiteNotes      VARCHAR(200)     NULL) ");
+                + "SiteNotes      VARCHAR(200)     NULL, "
+                + "LastStart      VARCHAR(50)      NULL) ");
     }
 }
