@@ -730,7 +730,7 @@ public class ListActivity extends BaseActivity implements IListView {
     //设置振动
     protected void setVibrator() {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(new long[]{ 0, 100, 1000 }, 1);
+        vibrator.vibrate(1300);
         vibrator.cancel();
     }
 
