@@ -95,8 +95,8 @@ public class BasePagerAdapter extends PagerAdapter {
     
     public void setOnItemChangeListener(OnItemChangeListener listener) { mOnItemChangeListener = listener; }
     
-    public interface OnItemChangeListener
+    public static interface OnItemChangeListener 
     {
-    	void onItemChange(int currentPosition);
+    	public void onItemChange(int currentPosition);
     }
-}
+};
