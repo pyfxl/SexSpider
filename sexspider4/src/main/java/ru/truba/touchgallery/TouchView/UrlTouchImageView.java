@@ -30,7 +30,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import ru.truba.sexspider4.R;
+import com.android.sexspider4.R;
 import ru.truba.touchgallery.TouchView.InputStreamWrapper.InputStreamProgressListener;
 
 public class UrlTouchImageView extends RelativeLayout {
