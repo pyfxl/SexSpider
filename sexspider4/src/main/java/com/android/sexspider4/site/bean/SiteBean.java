@@ -32,11 +32,11 @@ public class SiteBean {
     public String lastStart;
 
     public String getSiteTitleAndDomain() {
-        return siteRank + ". " + siteName + " " + StringUtils.substringLeft(domain.replaceAll("http://|https://", ""), "/");
+        return siteRank + "." + siteName + " " + StringUtils.substringLeft(domain.replaceAll("http://|https://", ""), "/");
     }
 
     public String getSiteTitle() {
-        return siteName + " (" + (listNum - 1) + ")";
+        return siteRank + "." + siteName + " (" + (listNum - 1) + ")";
     }
 
 }
