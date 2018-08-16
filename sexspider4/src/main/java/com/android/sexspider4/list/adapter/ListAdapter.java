@@ -1,6 +1,7 @@
 package com.android.sexspider4.list.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,13 +68,25 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         viewHolder.imageView.setVisibility(View.GONE);
         if (list.listPicture != null && !list.listPicture.equals("")) {
-            viewHolder.imageView.setImageBitmap(ImageHelper.getThumbImage(list));
-            viewHolder.imageView.setVisibility(View.VISIBLE);
+            Bitmap bitmap = ImageHelper.getThumbImage(list);
+            if(bitmap != null) {
+                viewHolder.imageView.setImageBitmap(bitmap);
+                viewHolder.imageView.setVisibility(View.VISIBLE);
+            }
         }
 
-        viewHolder.favoriteView.setVisibility(View.GONE);
-        if (list.isFavorite == 1) {
-            viewHolder.favoriteView.setVisibility(View.VISIBLE);
+        if(list.siteInfo.IsVideo()) {
+            viewHolder.favoriteView.setVisibility(View.GONE);
+            viewHolder.videoView.setVisibility(View.VISIBLE);
+            if (list.isFavorite == 1) {
+                viewHolder.videoView.setBackgroundResource(R.drawable.bg_float);
+            }
+        } else {
+            viewHolder.videoView.setVisibility(View.GONE);
+            viewHolder.favoriteView.setVisibility(View.GONE);
+            if (list.isFavorite == 1) {
+                viewHolder.favoriteView.setVisibility(View.VISIBLE);
+            }
         }
 
         if (list.isDowning == 1) {
@@ -118,6 +131,7 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView title;
         ImageView imageView;
         ImageView favoriteView;
+        ImageView videoView;
         ProgressBar progressBar;
         TextView loadNum;
 
@@ -126,6 +140,7 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             title = (TextView) itemView.findViewById(R.id.list_list_title);
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
             favoriteView = (ImageView) itemView.findViewById(R.id.favoriteView);
+            videoView = (ImageView) itemView.findViewById(R.id.videoView);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
             loadNum = (TextView) itemView.findViewById(R.id.textView);
         }

@@ -91,6 +91,10 @@ public class SiteAccess extends BaseAccess {
         site.pageEncode = cursor.getString(cursor.getColumnIndex("PageEncode"));
         site.domain = cursor.getString(cursor.getColumnIndex("Domain"));
         site.siteLink = cursor.getString(cursor.getColumnIndex("SiteLink"));
+        site.siteFilter = cursor.getString(cursor.getColumnIndex("SiteFilter"));
+        site.siteReplace = cursor.getString(cursor.getColumnIndex("SiteReplace"));
+        site.mainDiv = cursor.getString(cursor.getColumnIndex("MainDiv"));
+        site.thumbDiv = cursor.getString(cursor.getColumnIndex("ThumbDiv"));
         site.listDiv = cursor.getString(cursor.getColumnIndex("ListDiv"));
         site.listFilter = cursor.getString(cursor.getColumnIndex("ListFilter"));
         site.imageDiv = cursor.getString(cursor.getColumnIndex("ImageDiv"));
@@ -118,6 +122,10 @@ public class SiteAccess extends BaseAccess {
         values.put("PageEncode", site.pageEncode);
         values.put("Domain", site.domain);
         values.put("SiteLink", site.siteLink);
+        values.put("SiteFilter", site.siteFilter);
+        values.put("SiteReplace", site.siteReplace);
+        values.put("MainDiv", site.mainDiv);
+        values.put("ThumbDiv", site.thumbDiv);
         values.put("ListDiv", site.listDiv);
         values.put("ListFilter", site.listFilter);
         values.put("ImageDiv", site.imageDiv);

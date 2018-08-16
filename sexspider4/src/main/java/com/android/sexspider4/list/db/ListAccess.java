@@ -24,7 +24,7 @@ public class ListAccess extends BaseAccess {
 
     //查询所有已下载列表
     public List<ListBean> queryAllDown() {
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite "
+        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, A.ListPicture, A.IsFavorite "
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE A.IsShow = 1 AND A.IsDown <> 0 ORDER BY A.ListTitle ASC, A.IsRead ASC";
 
         return queryByString(sql, null);
@@ -32,7 +32,7 @@ public class ListAccess extends BaseAccess {
 
     //查询所有列表
     public List<ListBean> queryAll() {
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite "
+        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, A.ListPicture, A.IsFavorite "
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE B.IsUpdated <> 0 AND A.IsShow = 1 ORDER BY A.ListTitle ASC, A.IsRead ASC";
 
         return queryByString(sql, null);
@@ -40,7 +40,7 @@ public class ListAccess extends BaseAccess {
 
     //查询所有喜爱列表
     public List<ListBean> queryAllFavorite() {
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite "
+        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, A.ListPicture, A.IsFavorite "
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE A.IsFavorite = 1 AND A.IsShow = 1 ORDER BY A.ListTitle ASC, A.IsRead ASC";
 
         return queryByString(sql, null);
@@ -48,7 +48,7 @@ public class ListAccess extends BaseAccess {
 
     //查询未下载推荐列表
     public List<ListBean> queryAllRecommend() {
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite "
+        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, A.ListPicture, A.IsFavorite "
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE B.IsUpdated <> 0 AND A.IsShow = 1 AND (A.IsDown = 0 OR A.IsRead = 0) AND A.ListRank > 0 ORDER BY A.ListRank DESC, A.ListTitle ASC, A.IsRead ASC LIMIT 500 OFFSET 0";
 
         return queryByString(sql, null);
@@ -56,7 +56,7 @@ public class ListAccess extends BaseAccess {
 
     //查询所有推荐列表
     public List<ListBean> queryAllRecommendDown() {
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite "
+        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, A.ListPicture, A.IsFavorite "
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE B.IsUpdated <> 0 AND A.IsShow = 1 AND A.ListRank > 0 ORDER BY A.ListRank DESC, A.ListTitle ASC, A.IsRead ASC LIMIT 500 OFFSET 0";
 
         return queryByString(sql, null);
@@ -64,7 +64,7 @@ public class ListAccess extends BaseAccess {
 
     //查询所有未读列表
     public List<ListBean> queryAllNotRead() {
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite "
+        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, A.ListPicture, A.IsFavorite "
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE A.IsRead = 0 AND A.IsShow = 1 AND A.IsDown <> 0 ORDER BY A.ListTitle ASC, A.IsRead ASC";
 
         return queryByString(sql, null);
@@ -72,7 +72,7 @@ public class ListAccess extends BaseAccess {
 
     //根据siteId查询所有列表
     public List<ListBean> queryAllById(int siteId) {
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite "
+        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, A.ListPicture, A.IsFavorite "
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE A.SiteID = ? ORDER BY A.ListNum ASC, A.ListID DESC";
 
         return queryByString(sql, new String[] { String.valueOf(siteId) });
@@ -80,7 +80,7 @@ public class ListAccess extends BaseAccess {
 
     //根据siteId查询所有下载列表
     public List<ListBean> queryAllDownById(int siteId) {
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite, A.ListNotes "
+        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, A.ListPicture, A.IsFavorite, A.ListNotes "
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE A.SiteID = ? AND A.IsDown <> 0 ORDER BY A.ListNum ASC, A.ListID DESC";
 
         return queryByString(sql, new String[] { String.valueOf(siteId) });
@@ -89,7 +89,7 @@ public class ListAccess extends BaseAccess {
     //根据query查询所有列表
     public List<ListBean> queryIsShowByKey(String searchKey) {
         String key = "%" + searchKey + "%";
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite "
+        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, A.ListPicture, A.IsFavorite "
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE B.IsUpdated <> 0 AND A.ListTitle LIKE ? AND A.IsShow = 1 ORDER BY A.ListTitle ASC, A.IsRead ASC";
 
         return queryByString(sql, new String[] { String.valueOf(key) });
@@ -98,7 +98,7 @@ public class ListAccess extends BaseAccess {
     //根据query查询所有下载列表
     public List<ListBean> queryIsDownByKey(String searchKey) {
         String key = "%" + searchKey + "%";
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite "
+        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, A.ListPicture, A.IsFavorite "
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE A.ListTitle LIKE ? AND A.IsShow = 1 AND A.IsDown <> 0 ORDER BY A.ListTitle ASC, A.IsRead ASC";
 
         return queryByString(sql, new String[] { String.valueOf(key) });
@@ -126,9 +126,14 @@ public class ListAccess extends BaseAccess {
                 site.imageFilter = cursor.getString(cursor.getColumnIndex("ImageFilter"));
                 site.pageEncode = cursor.getString(cursor.getColumnIndex("PageEncode"));
                 site.domain = cursor.getString(cursor.getColumnIndex("Domain"));
+                site.mainDiv = cursor.getString(cursor.getColumnIndex("MainDiv"));
+                site.thumbDiv = cursor.getString(cursor.getColumnIndex("ThumbDiv"));
                 site.pageDiv = cursor.getString(cursor.getColumnIndex("PageDiv"));
                 site.pageFilter = cursor.getString(cursor.getColumnIndex("PageFilter"));
                 site.pageLevel = cursor.getString(cursor.getColumnIndex("PageLevel"));
+                site.siteRank = cursor.getString(cursor.getColumnIndex("SiteRank"));
+                site.siteFilter = cursor.getString(cursor.getColumnIndex("SiteFilter"));
+                site.siteReplace = cursor.getString(cursor.getColumnIndex("SiteReplace"));
                 entity.listPicture = cursor.getString(cursor.getColumnIndex("ListPicture"));
                 entity.isFavorite = cursor.getInt(cursor.getColumnIndex("IsFavorite"));
                 entity.siteInfo = site;
@@ -148,20 +153,23 @@ public class ListAccess extends BaseAccess {
     }
 
     //插入数据
-    public void insert(ListBean list) {
+    public long insert(ListBean list) {
         ContentValues values = new ContentValues();
         values.put("ListTitle", list.listTitle);
         values.put("ListLink", list.listLink);
+        values.put("ListPicture", list.listPicture);
         values.put("SiteID", list.siteInfo.siteId);
         values.put("ListNum", list.listNum);
         values.put("IsNew", list.isNew);
         values.put("ListNotes", list.listNotes);
 
         try {
-            db.insert(TABLE_LIST, null, values);
+            return db.insert(TABLE_LIST, null, values);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return -1;
     }
 
     //更新数据

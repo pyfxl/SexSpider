@@ -76,6 +76,10 @@ public class SiteModel implements ISite {
                 site.pageEncode = jsonObject.getString("pageencode");
                 site.domain = jsonObject.getString("domain");
                 site.siteLink = jsonObject.getString("sitelink");
+                site.siteFilter = jsonObject.getString("sitefilter");
+                site.siteReplace = jsonObject.getString("sitereplace");
+                site.mainDiv = jsonObject.getString("maindiv");
+                site.thumbDiv = jsonObject.getString("thumbdiv");
                 site.listDiv = jsonObject.getString("listdiv");
                 site.listFilter = jsonObject.getString("listfilter");
                 site.imageDiv = jsonObject.getString("imagediv");

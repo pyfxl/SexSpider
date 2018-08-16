@@ -26,6 +26,7 @@ public class GetImageFilter implements IFilter {
         lists.add("file");
         lists.add("data-original");
         lists.add("data-src");
+        lists.add("zoomfile");
         lists.add("src");
 
         for(String s : lists) {

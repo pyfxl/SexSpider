@@ -11,6 +11,8 @@ import com.android.sexspider4.list.bean.ListBean;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
 
 /**
  * Created by feng on 2017/5/5.
@@ -26,6 +28,13 @@ public class ImageHelper {
         String fileName = getFileName(link);
         String fileExtName = getExtName(fileName);
         return imageId + (fileName.equals("") ? ".jpg" : fileExtName);
+    }
+
+    //从url取新文件名
+    public static String getThumbName(String link) {
+        String fileName = getFileName(link);
+        String fileExtName = getExtName(fileName);
+        return "thumb" + (fileName.equals("") ? ".jpg" : fileExtName);
     }
 
     //从url取文件名
@@ -135,9 +144,11 @@ public class ImageHelper {
     //取缩略图
     private static Bitmap getThumbImage(ImageBean image) {
         File file = getFile(image);
+        if(!file.exists()) return null;
+
         Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
         if(bitmap == null) {
-            bitmap = BitmapFactory.decodeResource(MyApplication.getAppContext().getResources(), R.mipmap.ic_launcher);
+            //bitmap = BitmapFactory.decodeResource(MyApplication.getAppContext().getResources(), R.mipmap.ic_launcher);
         }
 
         return bitmap;

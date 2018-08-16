@@ -16,6 +16,10 @@ public class SiteBean {
     public String pageEncode;
     public String domain;
     public String siteLink;
+    public String siteFilter;
+    public String siteReplace;
+    public String mainDiv;
+    public String thumbDiv;
     public String listDiv;
     public String listFilter;
     public String imageDiv;
@@ -39,4 +43,7 @@ public class SiteBean {
         return siteName + " (" + (listNum - 1) + ")";
     }
 
+    public boolean IsVideo() {
+        return siteRank.startsWith("C");
+    }
 }

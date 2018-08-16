@@ -35,6 +35,9 @@ public class HttpHelper {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("User-Agent", MyApplication.USER_AGENT);
             connection.setRequestProperty("Referer", domain);
+            //connection.setRequestProperty("connection", "close");
+            connection.setRequestProperty("Accept-Encoding", "");
+            connection.setInstanceFollowRedirects(true);
             connection.setConnectTimeout(MyApplication.DEFAULT_TIMEOUT);
             connection.setReadTimeout(MyApplication.DEFAULT_TIMEOUT);
 
@@ -68,6 +71,9 @@ public class HttpHelper {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("User-Agent", MyApplication.USER_AGENT);
             connection.setRequestProperty("Referer", domain);
+            //connection.setRequestProperty("connection", "close");
+            connection.setRequestProperty("Accept-Encoding", "");
+            connection.setInstanceFollowRedirects(true);
             connection.setConnectTimeout(MyApplication.DEFAULT_TIMEOUT);
             connection.setReadTimeout(MyApplication.DEFAULT_TIMEOUT);
 

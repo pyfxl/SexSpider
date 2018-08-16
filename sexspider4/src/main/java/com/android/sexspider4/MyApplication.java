@@ -22,7 +22,7 @@ public class MyApplication extends Application {
     public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3141.8 Safari/537.36";
 
     //连接超时设置
-    public static final int DEFAULT_TIMEOUT = 5 * 1000;
+    public static final int DEFAULT_TIMEOUT = 8 * 1000;
 
     //一次获取的页数
     public static final int LIST_PAGE = 10;

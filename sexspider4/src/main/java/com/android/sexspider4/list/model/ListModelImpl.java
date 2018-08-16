@@ -119,6 +119,7 @@ public class ListModelImpl implements IListModel {
             list.listTitle = map.get("title");
             list.listLink = map.get("link");
             list.siteInfo = site;
+            list.listPicture = map.get("thumb");
             last = map.get("last");
 
             newLists.add(list);
@@ -136,8 +137,16 @@ public class ListModelImpl implements IListModel {
                 Collections.reverse(newLists);
 
                 for (ListBean list : newLists) {
+                    String listPicture = list.listPicture;
+                    String imageName = ImageHelper.getThumbName(list.listPicture);
+
+                    list.listPicture = imageName;
                     if (site.isFirst == 1) list.isNew = 1;
-                    listAccess.insert(list);
+                    long id = listAccess.insert(list);
+
+                    ImageBean image = new ImageBean(site.siteId, (int)id, imageName);
+                    image.imageLink = listPicture;
+                    ImageHelper.downImage(image, site.domain);
                 }
 
                 site.isUpdated = 4;
@@ -200,7 +209,13 @@ public class ListModelImpl implements IListModel {
         if (images.size() > 0) {
             //下载图片
             for(ImageBean image : images) {
-                boolean download = ImageHelper.downImage(image, list.siteInfo.domain);
+                boolean download = false;
+                if (list.siteInfo.IsVideo()) {
+                    download = list.loadNum>0;
+                    image.imageName = list.listPicture;
+                } else {
+                    download = ImageHelper.downImage(image, list.siteInfo.domain);
+                }
                 if (download) {
                     image.isDown = 1;
                     imageAccess.update(image);
@@ -239,12 +254,12 @@ public class ListModelImpl implements IListModel {
         } else if (!success.contains("1")) {
             if (list.isRedown == 0) {
                 list.isDown = 3;
-                list.listPicture = "";
+                //list.listPicture = "";
             }
         } else {
             if (list.isRedown == 0) {
                 list.isDown = 0;
-                list.listPicture = "";
+                //list.listPicture = "";
             }
         }
 
@@ -317,7 +332,7 @@ public class ListModelImpl implements IListModel {
 
                 if (list.siteInfo.pageLevel.equals("3")) { // 3 根据总页数
                     //String total = HtmlHelper.getPageTotal(list);
-                    pages = HtmlHelper.getPageMany(list.listLink, pages, list.listTotal);
+                    pages = HtmlHelper.getPageMany(list.listLink, pages, list.listTotal);//getPageArrayFromHtml已经取得总页数
                 } else if (list.siteInfo.pageLevel.equals("2")) { // 2 根据分页最大页数
                     pages = HtmlHelper.getPageMany(list.listLink, pages, "");
                 }

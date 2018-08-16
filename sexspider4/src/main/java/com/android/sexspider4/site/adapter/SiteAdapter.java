@@ -68,6 +68,10 @@ public class SiteAdapter extends RecyclerView.Adapter<SiteAdapter.ViewHolder> {
             holder.title.setTextColor(context.getResources().getColor(R.color.site_notvip_color));
             holder.isUpdated.setTextColor(context.getResources().getColor(R.color.site_notvip_color));
         }
+        if (site.IsVideo()) {
+            holder.title.setTextColor(context.getResources().getColor(R.color.site_video_color));
+            holder.isUpdated.setTextColor(context.getResources().getColor(R.color.site_video_color));
+        }
     }
 
     @Override

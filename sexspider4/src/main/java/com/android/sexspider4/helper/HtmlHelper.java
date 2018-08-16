@@ -58,13 +58,17 @@ public class HtmlHelper {
         return str;
     }
 
-    //取列表内容数组
+    //取列表数据
     public static List<Map<String, String>> getListArrayFromHtml(SiteBean site, List<String> delDics) {
+        List<Map<String, String>> result = new ArrayList<>();
+
         //取网页内容
         String str = HttpHelper.getStringFromLink(site.siteLink, site.pageEncode, site.domain);
-
-        List<Map<String, String>> result = new ArrayList<>();
         if(str.equals("")) return result;
+
+        //站点过滤
+        str = ReplaceChain(str, site.siteReplace);
+        str = FilterChain(str, site.siteFilter);
 
         //公共处理
         Iterator<String> it = delDics.iterator();
@@ -87,6 +91,7 @@ public class HtmlHelper {
                     JSONObject obj = jsonArray.getJSONObject(i);
                     Map<String, String> map = new HashMap<>();
                     map.put("title", obj.getString(child[0]));
+                    map.put("thumb", obj.getString(child[2]));
                     map.put("link", setLink(obj.getString(child[1]), site.domain));
                     if (child.length == 3)
                         map.put("last", obj.getString(child[2]));
@@ -94,21 +99,51 @@ public class HtmlHelper {
                     result.add(map);
                 }
             } else {
-                //取实际内容
-                Document doc = Jsoup.parse(str);
-                Elements content = doc.select(site.listDiv);
-                for (Element ele : content) {
-                    String _title = filter.doFilter(ele.html());
+                if (!site.mainDiv.equals("null") && !site.mainDiv.equals("")) {
+                    //取实际内容
+                    Document doc = Jsoup.parse(str);
+                    Elements content = doc.select(site.mainDiv);
+                    for (Element ele : content) {
+                        Document _doc = Jsoup.parse(ele.html());
+                        Elements _ele = _doc.select(site.listDiv);
+                        Element _item = _ele.first();
 
-                    //标题为空跳过
-                    if (isEmptyLink(_title)) continue;
+                        if(_item == null) continue;
 
-                    Map<String, String> map = new HashMap<>();
-                    map.put("title", _title);
-                    map.put("link", setLink(ele.attr("href"), site.domain));
-                    map.put("last", "");
+                        String _title = filter.doFilter(_item.html());
 
-                    result.add(map);
+                        //标题为空跳过
+                        if (isEmptyLink(_title)) continue;
+
+                        Element _img = _doc.select(site.thumbDiv).first();
+                        String _imgtxt = _img == null ? "" : _img.toString();
+
+                        Map<String, String> map = new HashMap<>();
+                        map.put("title", _title);
+                        map.put("thumb", getThumb(_imgtxt, site.domain));
+                        map.put("link", setLink(_item.attr("href"), site.domain));
+                        map.put("last", "");
+
+                        result.add(map);
+                    }
+                } else {
+                    //取实际内容
+                    Document doc = Jsoup.parse(str);
+                    Elements content = doc.select(site.listDiv);
+                    for (Element ele : content) {
+                        String _title = filter.doFilter(ele.html());
+
+                        //标题为空跳过
+                        if (isEmptyLink(_title)) continue;
+
+                        Map<String, String> map = new HashMap<>();
+                        map.put("title", _title);
+                        map.put("thumb", getThumb(ele.html(), site.domain));
+                        map.put("link", setLink(ele.attr("href"), site.domain));
+                        map.put("last", "");
+
+                        result.add(map);
+                    }
                 }
             }
         } catch(Exception e) {
@@ -120,11 +155,15 @@ public class HtmlHelper {
 
     //取图片内容
     public static List<String> getImageArrayFromHtml(ListBean list) {
+        List<String> result = new ArrayList<>();
+
         //取网页内容
         String str = HttpHelper.getStringFromLink(list.getListLink(), list.siteInfo.pageEncode, list.siteInfo.domain);
-
-        List<String> result = new ArrayList<>();
         if (str.equals("")) return result;
+
+        //站点过滤
+        str = ReplaceChain(str, list.siteInfo.siteReplace);
+        str = FilterChain(str, list.siteInfo.siteFilter);
 
         //责任链
         FilterChain filter = new FilterChain(list.siteInfo.imageFilter);
@@ -156,11 +195,15 @@ public class HtmlHelper {
 
     //取分页内容
     public static List<String> getPageArrayFromHtml(ListBean list) {
+        List<String> result = new ArrayList<>();
+
         //取网页内容
         String str = HttpHelper.getStringFromLink(list.getListLink(), list.siteInfo.pageEncode, list.siteInfo.domain);
-
-        List<String> result = new ArrayList<>();
         if (str.equals("")) return result;
+
+        //站点过滤
+        str = ReplaceChain(str, list.siteInfo.siteReplace);
+        str = FilterChain(str, list.siteInfo.siteFilter);
 
         //责任链
         FilterChain filter = new FilterChain(list.siteInfo.pageFilter);
@@ -185,7 +228,7 @@ public class HtmlHelper {
             }
 
             //取总页数
-            content = doc.select(list.siteInfo.pageFilter);
+            content = doc.select(list.siteInfo.pageFilter);//取总页数filter
             for (Element ele : content) {
                 list.listTotal = ele.html().replaceAll("[^\\d]", "");
             }
@@ -198,6 +241,8 @@ public class HtmlHelper {
 
     //设置url全部
     private static String setLink(String url, String domain) {
+        if(url == null || url.equals("")) return "";
+
         if (url.startsWith("http")) {
             return url;
         }
@@ -212,6 +257,8 @@ public class HtmlHelper {
 
     //设置url全部
     private static String setLink(String url, String _domain, String domain) {
+        if(url == null || url.equals("")) return "";
+
         if (url.startsWith("http")) {
             return url;
         } else if (url.startsWith("/")) {
@@ -223,6 +270,30 @@ public class HtmlHelper {
         return _domain + url;
     }
 
+    //缩略图
+    private static String getThumb(String str, String domain){
+        if(str.equals("")) return "";
+
+        Document doc = Jsoup.parse(str);
+        Elements content = doc.select("img");
+        if(content != null && content.size() > 0){
+            Element item = content.first();
+            List<String> lists = new ArrayList<>();
+            lists.add("file");
+            lists.add("data-original");
+            lists.add("data-src");
+            lists.add("zoomfile");
+            lists.add("src");
+
+            for(String s : lists) {
+                if(item.hasAttr(s)) return setLink(item.attr(s), domain);
+            }
+        }
+
+        return "";
+    }
+
+    //取分页页数，比如妹子图[1][2][3]...[70]
     public static List<String> getPageMany(String url, List<String> pages, String total) {
         List<String> result = new ArrayList<>();
 
@@ -262,20 +333,19 @@ public class HtmlHelper {
         if (_link.equals("")) return true;
         if (_link.contains("javascript")) return true;
         return _link.equals("#");
-
     }
 
     public static String getPageTotal(ListBean list) {
+        String result = "";
+
         //取网页内容
         String str = HttpHelper.getStringFromLink(list.getListLink(), list.siteInfo.pageEncode, list.siteInfo.domain);
-
-        String result = "";
-        if (str.equals("")) return result;
+        if (str.equals("")) return "";
 
         try {
             //取实际内容
             Document doc = Jsoup.parse(str);
-            Elements content = doc.select(list.siteInfo.pageFilter);
+            Elements content = doc.select(list.siteInfo.pageFilter);//取总页数filter
             for (Element ele : content) {
                 result = ele.html().replaceAll("[^\\d]", "");
             }
@@ -284,5 +354,36 @@ public class HtmlHelper {
         }
 
         return result;
+    }
+
+    //替换站点html
+    private static String ReplaceChain(String str, String fi){
+        if(fi == null || fi.equals("null") || fi.equals("")) return str;
+
+        try {
+            JSONArray jsonArray = new JSONArray(fi);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject obj = jsonArray.getJSONObject(i);
+                String oldStr = obj.getString("old");
+                String newStr = obj.getString("new");
+                str = str.replace(oldStr, newStr);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return str;
+    }
+
+    //过滤站点html
+    private static String FilterChain(String str, String fi){
+        if(fi == null || fi.equals("null") || fi.equals("")) return str;
+
+        FilterChain filter = new FilterChain(fi);
+        if(filter.Count() > 0) {
+            str = filter.doFilter(str);
+        }
+
+        return str;
     }
 }

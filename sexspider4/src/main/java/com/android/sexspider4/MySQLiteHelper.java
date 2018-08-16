@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "sexspider4.db";
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 7;
     private static final String SITE_TABLE = "SiteTable";
     private static final String LIST_TABLE = "ListTable";
     private static final String IMAGE_TABLE = "ImageTable";
@@ -81,6 +81,16 @@ class MySQLiteHelper extends SQLiteOpenHelper {
                 case 3:
                     db.execSQL("ALTER TABLE " + SITE_TABLE + " ADD COLUMN LastStart VARCHAR(50) NULL");
                     break;
+                case 4:
+                    db.execSQL("ALTER TABLE " + SITE_TABLE + " ADD COLUMN MainDiv VARCHAR(50) NULL");
+                    db.execSQL("ALTER TABLE " + SITE_TABLE + " ADD COLUMN ThumbDiv VARCHAR(50) NULL");
+                    break;
+                case 5:
+                    db.execSQL("ALTER TABLE " + SITE_TABLE + " ADD COLUMN SiteFilter VARCHAR(50) NULL");
+                    break;
+                case 6:
+                    db.execSQL("ALTER TABLE " + SITE_TABLE + " ADD COLUMN SiteReplace VARCHAR(1000) NULL");
+                    break;
             }
         }
     }
@@ -92,10 +102,14 @@ class MySQLiteHelper extends SQLiteOpenHelper {
                 + "VipLevel       INTEGER          NOT NULL, "
                 + "IsHided        INTEGER          DEFAULT 0, "
                 + "SiteName       VARCHAR(50)      NOT NULL, "
-                + "ListPage       VARCHAR(200)      NOT NULL, "
+                + "ListPage       VARCHAR(200)     NOT NULL, "
                 + "PageEncode     VARCHAR(10)      NOT NULL, "
                 + "Domain         VARCHAR(50)      NOT NULL, "
                 + "SiteLink       VARCHAR(200)     NOT NULL, "
+                + "SiteFilter     VARCHAR(50)      NULL, "
+                + "SiteReplace    VARCHAR(1000)    NULL, "
+                + "MainDiv        VARCHAR(50)      NULL, "
+                + "ThumbDiv       VARCHAR(50)      NULL, "
                 + "ListDiv        VARCHAR(50)      NOT NULL, "
                 + "ListFilter     VARCHAR(50)      NOT NULL, "
                 + "ImageDiv       VARCHAR(50)      NOT NULL, "

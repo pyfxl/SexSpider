@@ -40,6 +40,7 @@ import com.android.sexspider4.search.presenter.ISearchPresenter;
 import com.android.sexspider4.search.presenter.SearchPresenterImpl;
 import com.android.sexspider4.site.bean.SiteBean;
 import com.android.sexspider4.utils.StringUtils;
+import com.android.sexspider4.video.VideoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +89,7 @@ public class ListActivity extends BaseActivity implements IListView {
     protected boolean viewFlag = false;
     protected boolean bottomFlag = false;
     protected boolean scrollFlag = false;
+    protected boolean loadFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,9 +171,10 @@ public class ListActivity extends BaseActivity implements IListView {
     @Override
     public void doBack() {
         //列表刷新中不能退出
-        if (checkRefreshing()) return;
+        //if (checkRefreshing()) return;
 
         downloadFlag = false;
+        loadFlag = false;
         listPresenter.cancelDown(downLists);
 
         Intent intent = new Intent();
@@ -313,7 +316,7 @@ public class ListActivity extends BaseActivity implements IListView {
                 checkListsEmpty();
                 refreshStop();
                 setActionBar();
-                if (!isLoadError && site.isFirst==0) continueLoad();
+                if (!isLoadError && site.isFirst==0 && loadFlag) continueLoad();
             }
         });
     }
@@ -632,7 +635,14 @@ public class ListActivity extends BaseActivity implements IListView {
         }
 
         //跳转图片页面
-        Intent intent = new Intent(ListActivity.this, ImageActivity.class);
+        Intent intent = null;
+
+        if(list.siteInfo.IsVideo()) {
+            intent = new Intent(ListActivity.this, VideoActivity.class);
+        } else {
+            intent = new Intent(ListActivity.this, ImageActivity.class);
+        }
+
         intent.putExtra("listid", list.listId);
         intent.putExtra("title", list.listTitle);
         intent.putExtra("isfavorite", list.isFavorite);
@@ -746,6 +756,7 @@ public class ListActivity extends BaseActivity implements IListView {
 
     //刷新按钮
     protected void doRefresh() {
+        loadFlag = true;
         if (viewFlag) {
             viewOff();
             viewOffMethod();

@@ -80,6 +80,7 @@ public abstract class BaseActivity extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             doBack();
+            return false;
         }
         return super.onKeyDown(keyCode, event);
     }
