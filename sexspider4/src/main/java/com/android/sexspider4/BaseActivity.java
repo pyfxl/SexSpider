@@ -5,34 +5,45 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 /**
  * Created by feng on 2017/5/5.
  */
 
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends AppCompatActivity {
     protected final int FIRST_REQUEST_CODE = 1;
     protected final int SECOND_REQUEST_CODE = 2;
 
     private Toast toast;
     private TextView actionBarTitle;
+    protected Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+//        actionBar = getSupportActionBar();
+//        if(actionBar != null){
+//            actionBar.setHomeButtonEnabled(true);
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//        }
+
         findView();
         setActionBar();
+
+        //toolbar = getToolbar();
+        //setSupportActionBar(toolbar);
     }
 
     //设置ActionBar
     private void setActionBar() {
-        ActionBar actionBar = getActionBar();
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             actionBar.setCustomView(R.layout.action_bar);
@@ -52,6 +63,12 @@ public abstract class BaseActivity extends Activity {
             //getActionBar().setDisplayHomeAsUpEnabled(true);
             //getActionBar().setHomeAsUpIndicator(R.drawable.ic_action_back);
         }
+    }
+
+    private Toolbar getToolbar() {
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        View actionView = actionBar.getCustomView();
+        return (Toolbar) actionView.getParent();
     }
 
     //设置标题

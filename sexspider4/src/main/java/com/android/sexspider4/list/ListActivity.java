@@ -5,18 +5,26 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.JavascriptInterface;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -29,6 +37,8 @@ import com.android.sexspider4.R;
 import com.android.sexspider4.helper.ImageHelper;
 import com.android.sexspider4.helper.SegHelper;
 import com.android.sexspider4.image.ImageActivity;
+import com.android.sexspider4.image.VideoActivity;
+import com.android.sexspider4.webview.WebViewActivity;
 import com.android.sexspider4.list.adapter.ListAdapter;
 import com.android.sexspider4.list.bean.ListBean;
 import com.android.sexspider4.list.listener.OnItemClickListener;
@@ -40,7 +50,6 @@ import com.android.sexspider4.search.presenter.ISearchPresenter;
 import com.android.sexspider4.search.presenter.SearchPresenterImpl;
 import com.android.sexspider4.site.bean.SiteBean;
 import com.android.sexspider4.utils.StringUtils;
-import com.android.sexspider4.video.VideoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +99,10 @@ public class ListActivity extends BaseActivity implements IListView {
     protected boolean bottomFlag = false;
     protected boolean scrollFlag = false;
     protected boolean loadFlag = false;
+
+    private WebView webView;
+    private boolean webFlag = false;
+    private String listHtml = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -413,6 +426,38 @@ public class ListActivity extends BaseActivity implements IListView {
     }
 
     @Override
+    public String getListHtml(final ListBean list, int position) {
+        listHtml = "";
+        webFlag = false;
+        ListActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //webview
+                webView = new WebView(ListActivity.this);
+                webView.getSettings().setJavaScriptEnabled(true);
+                webView.addJavascriptInterface(new ListActivity.InJavaScriptLocalObj(), "local_obj");
+                webView.getSettings().setUserAgentString(MyApplication.USER_AGENT);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+                }
+                webView.loadUrl(list.getListLink());
+                webView.setWebViewClient(new ListActivity.MyWebViewClient());
+            }
+        });
+
+        //做成同步
+        while(!webFlag) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return listHtml;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_list, menu);
@@ -420,7 +465,7 @@ public class ListActivity extends BaseActivity implements IListView {
         final Menu m = menu;
 
         final MenuItem downloadItem = menu.findItem(R.id.action_download);
-        downloadView = (ImageView)downloadItem.getActionView();
+        downloadView = (ImageView) MenuItemCompat.getActionView(downloadItem);
         downloadView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -477,6 +522,18 @@ public class ListActivity extends BaseActivity implements IListView {
                     list.isFavorite = data.getIntExtra("isfavorite", 0);
                     adapter.notifyItemChanged(position);
                 }
+            }
+        }
+        if (requestCode == SECOND_REQUEST_CODE) {
+            if (data != null) {
+                int position = data.getIntExtra("position", 0);
+                int isDown = data.getIntExtra("isdown", 0);
+                ListBean list = lists.get(position);
+                list.isNew = 0;
+                list.isDown = isDown;
+                list.isRead = 0;
+                listPresenter.updateList(list);
+                adapter.notifyItemChanged(position);
             }
         }
     }
@@ -636,7 +693,6 @@ public class ListActivity extends BaseActivity implements IListView {
 
         //跳转图片页面
         Intent intent = null;
-
         if(list.siteInfo.IsVideo()) {
             intent = new Intent(ListActivity.this, VideoActivity.class);
         } else {
@@ -644,9 +700,8 @@ public class ListActivity extends BaseActivity implements IListView {
         }
 
         intent.putExtra("listid", list.listId);
-        intent.putExtra("title", list.listTitle);
-        intent.putExtra("isfavorite", list.isFavorite);
         intent.putExtra("position", position);
+        intent.putExtra("title", list.listTitle);
         startActivityForResult(intent, FIRST_REQUEST_CODE);
     }
 
@@ -985,4 +1040,42 @@ public class ListActivity extends BaseActivity implements IListView {
         listPresenter.updateIsNew(site.siteId);
     }
 
+    //网页
+    private class MyWebViewClient extends WebViewClient {
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            super.onReceivedError(view, errorCode, description, failingUrl);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            view.loadUrl("javascript:window.local_obj.showSource('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+
+        @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            handler.proceed();
+        }
+    }
+
+    final class InJavaScriptLocalObj {
+        @JavascriptInterface
+        public void showSource(String html) {
+            //System.out.println("====>html="+html);
+            listHtml = html;
+            webFlag = true;
+        }
+    }
 }

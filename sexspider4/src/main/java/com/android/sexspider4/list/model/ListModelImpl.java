@@ -9,8 +9,8 @@ import com.android.sexspider4.image.bean.ImageBean;
 import com.android.sexspider4.image.db.ImageAccess;
 import com.android.sexspider4.list.bean.ListBean;
 import com.android.sexspider4.list.db.ListAccess;
-import com.android.sexspider4.list.listener.OnListDataLoadListener;
 import com.android.sexspider4.list.listener.OnImageDownListener;
+import com.android.sexspider4.list.listener.OnListDataLoadListener;
 import com.android.sexspider4.search.bean.SearchBean;
 import com.android.sexspider4.search.db.SearchAccess;
 import com.android.sexspider4.site.bean.SiteBean;
@@ -91,6 +91,11 @@ public class ListModelImpl implements IListModel {
     @Override
     public List<ListBean> getListsDownByQueryKey(String queryKey) {
         return listAccess.queryIsDownByKey(queryKey);
+    }
+
+    @Override
+    public ListBean getListByListId(int listId) {
+        return listAccess.queryByListId(listId);
     }
 
     @Override
@@ -202,7 +207,13 @@ public class ListModelImpl implements IListModel {
         listener.onDownStart(position);
 
         String success = "";
-        List<ImageBean> images = getDownImages(list);
+        String html = "";
+
+        if(list.siteInfo.IsAjax()) {
+            html = listener.getListHtml(list, position);//获取ajax页面html
+        }
+
+        List<ImageBean> images = getDownImages(list, html);
         list.loadNum = images.size();
         listener.onDownSuccess(position);
 
@@ -318,7 +329,7 @@ public class ListModelImpl implements IListModel {
     }
 
     //获取要下载的图片
-    private List<ImageBean> getDownImages(ListBean list) {
+    private List<ImageBean> getDownImages(ListBean list, String html) {
         //查找未下载的图片
         List<ImageBean> images = imageAccess.queryNotDownById(list.listId);
         if (images.size() <= 0) {
@@ -345,7 +356,7 @@ public class ListModelImpl implements IListModel {
             List<String> imgs = new ArrayList<>();
             for (String link : pages) {
                 list.listLink = link;
-                imgs.addAll(HtmlHelper.getImageArrayFromHtml(list));
+                imgs.addAll(HtmlHelper.getImageArrayFromHtml(list, html));
             }
 
             //插入图片到数据库

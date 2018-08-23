@@ -1,8 +1,8 @@
 package com.android.sexspider4.list.model;
 
 import com.android.sexspider4.list.bean.ListBean;
-import com.android.sexspider4.list.listener.OnListDataLoadListener;
 import com.android.sexspider4.list.listener.OnImageDownListener;
+import com.android.sexspider4.list.listener.OnListDataLoadListener;
 import com.android.sexspider4.search.bean.SearchBean;
 import com.android.sexspider4.site.bean.SiteBean;
 
@@ -24,6 +24,7 @@ public interface IListModel {
     List<ListBean> getListsByNotRead();
     List<ListBean> getListsByQueryKey(String queryKey);
     List<ListBean> getListsDownByQueryKey(String queryKey);
+    ListBean getListByListId(int listId);
     void loadListDataBySite(SiteBean site, OnListDataLoadListener listener);
     void downImageByList(ListBean list, int position, OnImageDownListener listener);
     void updateList(ListBean list);

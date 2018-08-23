@@ -1,5 +1,7 @@
 package com.android.sexspider4.list.presenter;
 
+import android.content.Context;
+
 import com.android.sexspider4.list.bean.ListBean;
 import com.android.sexspider4.search.bean.SearchBean;
 import com.android.sexspider4.site.bean.SiteBean;
@@ -22,6 +24,7 @@ public interface IListPresenter {
     List<ListBean> getListsByNotRead();
     List<ListBean> getListsByQueryKey(String queryKey);
     List<ListBean> getListsDownByQueryKey(String queryKey);
+    ListBean getListByListId(int listId);
     void setListsBySiteId(int siteId);
     void loadListDataBySite(SiteBean site);
     void downImageByList(ListBean list, int position);

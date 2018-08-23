@@ -36,8 +36,8 @@
         android:id="@+id/favoriteView"
         android:contentDescription="@string/txt_image_thumb"
         android:background="@drawable/bg_float"
-        app:layout_constraintLeft_toLeftOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
         android:layout_marginStart="@dimen/list_favorite_margin"
         android:layout_marginTop="@dimen/list_favorite_margin" />
 
@@ -49,8 +49,8 @@
         android:id="@+id/videoView"
         android:visibility="gone"
         android:contentDescription="@string/txt_image_thumb"
-        app:layout_constraintLeft_toLeftOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
         android:layout_marginStart="@dimen/list_favorite_margin"
         android:layout_marginTop="@dimen/list_favorite_margin" />
 

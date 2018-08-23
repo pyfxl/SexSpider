@@ -1,8 +1,8 @@
 package com.android.sexspider4.list.presenter;
 
 import com.android.sexspider4.list.bean.ListBean;
-import com.android.sexspider4.list.listener.OnListDataLoadListener;
 import com.android.sexspider4.list.listener.OnImageDownListener;
+import com.android.sexspider4.list.listener.OnListDataLoadListener;
 import com.android.sexspider4.list.model.IListModel;
 import com.android.sexspider4.list.model.ListModelImpl;
 import com.android.sexspider4.list.view.IListView;
@@ -82,6 +82,11 @@ public class ListPresenterImpl implements IListPresenter, OnListDataLoadListener
     @Override
     public List<ListBean> getListsDownByQueryKey(String queryKey) {
         return listModel.getListsDownByQueryKey(queryKey);
+    }
+
+    @Override
+    public ListBean getListByListId(int listId) {
+        return listModel.getListByListId(listId);
     }
 
     @Override
@@ -188,6 +193,11 @@ public class ListPresenterImpl implements IListPresenter, OnListDataLoadListener
     @Override
     public void onDownCancel() {
         listView.downCancel();
+    }
+
+    @Override
+    public String getListHtml(ListBean list, int position) {
+        return listView.getListHtml(list, position);
     }
 
     @Override

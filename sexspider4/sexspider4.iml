@@ -105,13 +105,17 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Gradle: __local_aars__:D.\fxlandroid\SexSpider\sexspider4\libs\java-client-4.1.2.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-solver:1.0.2@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-v4-22.2.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-1.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:D.\fxlandroid\SexSpider\sexspider4\libs\selenium-server-3.0.1.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:D.\fxlandroid\SexSpider\sexspider4\libs\selenium-java-2.48.2.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:D.\fxlandroid\SexSpider\sexspider4\libs\selenium-java-client-driver-1.0.2.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-annotations:22.2.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: __local_aars__:D.\fxlandroid\SexSpider\sexspider4\libs\IKAnalyzer2012FF_u1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:recyclerview-v7-22.2.1" level="project" />
     <orderEntry type="library" name="Gradle: org.jsoup:jsoup:1.10.2@jar" level="project" />
-    <orderEntry type="library" name="Gradle: com.android.support:support-v4-22.2.1" level="project" />
-    <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-1.0.2" level="project" />
     <orderEntry type="library" name="Gradle: cn.jzvd:jiaozivideoplayer-6.2.12" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:appcompat-v7-22.2.1" level="project" />
   </component>

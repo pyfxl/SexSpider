@@ -50,10 +50,12 @@
             android:name=".image.ImageActivity"
             android:label="@string/activity_image" />
         <activity
-            android:name=".video.VideoActivity"
+            android:name=".webview.WebViewActivity"
+            android:label="@string/activity_image" />
+        <activity
+            android:name=".image.VideoActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:theme="@style/AppThemeVideo"
             android:label="@string/activity_video" />
         <activity
             android:name=".search.SearchActivity"

@@ -5,6 +5,7 @@ public class GetMp4Filter implements IFilter {
     public String doFilter(String str) {
         try {
             str = str.replace("'", "\"");
+            str = str.replaceAll("<.+?>", "");
 
             int pos = str.indexOf(".mp4");
             String fStr = str.substring(0, pos);

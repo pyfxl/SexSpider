@@ -1,4 +1,6 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".site.SiteActivity">
 
@@ -6,16 +8,16 @@
         android:id="@+id/action_search"
         android:title="@string/txt_menu_search"
         android:orderInCategory="100"
-        android:showAsAction="always"
+        app:showAsAction="always"
         android:icon="@drawable/ic_action_search"
-        android:actionViewClass="android.widget.SearchView" />
+        app:actionViewClass="android.widget.SearchView" />
 
     <item
         android:id="@+id/action_download"
         android:title="@string/txt_menu_canceldown"
         android:orderInCategory="200"
-        android:showAsAction="always"
+        app:showAsAction="always"
         android:icon="@drawable/ic_action_download"
-        android:actionLayout="@layout/menu_download" />
+        app:actionLayout="@layout/menu_download" />
 
 </menu>

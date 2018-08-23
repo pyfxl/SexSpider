@@ -5,6 +5,7 @@ public class GetM3u8Filter implements IFilter {
     public String doFilter(String str) {
         try {
             str = str.replace("'", "\"");
+            str = str.replaceAll("<.+?>", "");
 
             int pos = str.indexOf(".m3u8");
             String fStr = str.substring(0, pos);

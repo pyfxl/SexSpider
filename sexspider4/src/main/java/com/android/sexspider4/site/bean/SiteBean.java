@@ -46,4 +46,12 @@ public class SiteBean {
     public boolean IsVideo() {
         return siteRank.startsWith("C");
     }
+
+    public boolean IsVip() {
+        return vipLevel == 0;
+    }
+
+    public boolean IsAjax() {
+        return docType.contains("ajax");
+    }
 }

@@ -75,6 +75,7 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
         }
 
+        //视频标志
         if(list.siteInfo.IsVideo()) {
             viewHolder.favoriteView.setVisibility(View.GONE);
             viewHolder.videoView.setVisibility(View.VISIBLE);

@@ -11,13 +11,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by feng on 2017/5/5.
@@ -67,8 +66,8 @@ public class HtmlHelper {
         if(str.equals("")) return result;
 
         //站点过滤
-        str = ReplaceChain(str, site.siteReplace);
         str = FilterChain(str, site.siteFilter);
+        str = ReplaceChain(str, site.siteReplace);
 
         //公共处理
         Iterator<String> it = delDics.iterator();
@@ -81,7 +80,7 @@ public class HtmlHelper {
 
         try {
             //json
-            if (site.docType.equals("json")) {
+            if (site.docType.contains("json")) {
                 String[] root = site.listDiv.split("\\|\\|");
                 JSONObject jsonObject = new JSONObject(str);
                 JSONArray jsonArray = jsonObject.getJSONArray(root[0]);
@@ -155,15 +154,21 @@ public class HtmlHelper {
 
     //取图片内容
     public static List<String> getImageArrayFromHtml(ListBean list) {
+        String html = HttpHelper.getStringFromLink(list.getListLink(), list.siteInfo.pageEncode, list.siteInfo.domain);
+        return getImageArrayFromHtml(list, html);
+    }
+
+    //取图片内容--html
+    public static List<String> getImageArrayFromHtml(ListBean list, String html) {
         List<String> result = new ArrayList<>();
 
         //取网页内容
-        String str = HttpHelper.getStringFromLink(list.getListLink(), list.siteInfo.pageEncode, list.siteInfo.domain);
+        String str = html;
         if (str.equals("")) return result;
 
         //站点过滤
-        str = ReplaceChain(str, list.siteInfo.siteReplace);
         str = FilterChain(str, list.siteInfo.siteFilter);
+        str = ReplaceChain(str, list.siteInfo.siteReplace);
 
         //责任链
         FilterChain filter = new FilterChain(list.siteInfo.imageFilter);
@@ -202,8 +207,8 @@ public class HtmlHelper {
         if (str.equals("")) return result;
 
         //站点过滤
-        str = ReplaceChain(str, list.siteInfo.siteReplace);
         str = FilterChain(str, list.siteInfo.siteFilter);
+        str = ReplaceChain(str, list.siteInfo.siteReplace);
 
         //责任链
         FilterChain filter = new FilterChain(list.siteInfo.pageFilter);
@@ -364,8 +369,8 @@ public class HtmlHelper {
             JSONArray jsonArray = new JSONArray(fi);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject obj = jsonArray.getJSONObject(i);
-                String oldStr = obj.getString("old");
-                String newStr = obj.getString("new");
+                String oldStr = URLDecoder.decode(obj.getString("old"), "utf-8");
+                String newStr = URLDecoder.decode(obj.getString("new"), "utf-8");
                 str = str.replace(oldStr, newStr);
             }
         }catch (Exception e) {
@@ -386,4 +391,5 @@ public class HtmlHelper {
 
         return str;
     }
+
 }

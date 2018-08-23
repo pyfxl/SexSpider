@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.android.sexspider4.video.VideoActivity"
+    tools:context="com.android.sexspider4.image.VideoActivity"
     android:id="@+id/constraintLayout">
 
 
     <cn.jzvd.JZVideoPlayerStandard
         android:id="@+id/videoplayer"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="320dp"
         app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
         app:layout_constraintRight_toRightOf="@+id/constraintLayout" />
 

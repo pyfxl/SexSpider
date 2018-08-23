@@ -31,23 +31,24 @@ import ru.truba.touchgallery.GalleryWidget.GalleryViewPager;
 public class ImageActivity extends BaseActivity implements IImageView {
     private IImagePresenter imagePresenter;
     private List<ImageBean> images;
-    private TextView textView;
+    protected TextView textView;
     private ImageView favoriteView;
     private boolean favoriteFlag = false;
     private int listId;
     private int isFavorite;
     private int position = 0;
     private ImageView floatView;
+    protected String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image);
+        showView();
 
         //取传入的值
         Intent intent = super.getIntent();
         listId = intent.getIntExtra("listid", 0);
-        String title = intent.getStringExtra("title");
+        title = intent.getStringExtra("title");
         position = intent.getIntExtra("position", 0);
         isFavorite = intent.getIntExtra("isfavorite", 0);
         favoriteFlag = (isFavorite == 1);
@@ -64,25 +65,33 @@ public class ImageActivity extends BaseActivity implements IImageView {
         if(images.size() <= 0) {
             doBackError();
         } else {
-            //图片列表
-            List<String> items = new ArrayList<>();
-            for (ImageBean image : images) {
-                String fileName = ImageHelper.getFile(image).getPath();
-                items.add(fileName);
-            }
-
-            //第三方图片控件
-            FilePagerAdapter pagerAdapter = new FilePagerAdapter(this, items);
-            pagerAdapter.setOnItemChangeListener(new BasePagerAdapter.OnItemChangeListener() {
-                @Override
-                public void onItemChange(int currentPosition) {
-                    textView.setText(images.get(currentPosition).imageId + "/" + images.size());
-                }
-            });
-            GalleryViewPager gallery = (GalleryViewPager) super.findViewById(R.id.gallery);
-            gallery.setOffscreenPageLimit(3);
-            gallery.setAdapter(pagerAdapter);
+            showImage(images);
         }
+    }
+
+    protected  void showView() {
+        setContentView(R.layout.activity_image);
+    }
+
+    protected  void showImage(final List<ImageBean> images) {
+        //图片列表
+        List<String> items = new ArrayList<>();
+        for (ImageBean image : images) {
+            String fileName = ImageHelper.getFile(image).getPath();
+            items.add(fileName);
+        }
+
+        //第三方图片控件
+        FilePagerAdapter pagerAdapter = new FilePagerAdapter(this, items);
+        pagerAdapter.setOnItemChangeListener(new BasePagerAdapter.OnItemChangeListener() {
+            @Override
+            public void onItemChange(int currentPosition) {
+                textView.setText(images.get(currentPosition).imageId + "/" + images.size());
+            }
+        });
+        GalleryViewPager gallery = (GalleryViewPager) super.findViewById(R.id.gallery);
+        gallery.setOffscreenPageLimit(3);
+        gallery.setAdapter(pagerAdapter);
     }
 
     private void doBackError() {

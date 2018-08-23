@@ -1,6 +1,7 @@
 package com.android.sexspider4.list;
 
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,7 +46,7 @@ public class ListAllDownActivity extends ListActivity implements IListView {
         final Menu m = menu;
 
         final MenuItem downloadItem = menu.findItem(R.id.action_download);
-        downloadView = (ImageView)downloadItem.getActionView();
+        downloadView = (ImageView) MenuItemCompat.getActionView(downloadItem);
         downloadView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

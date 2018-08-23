@@ -6,16 +6,16 @@
     android:id="@+id/constraintLayout">
 
     <TextView
-        android:text="@string/txt_title"
+        android:id="@+id/actionBarTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/actionBarTitle"
+        android:background="?android:attr/actionBarItemBackground"
         android:drawableLeft="@drawable/ic_action_back"
         android:gravity="center_vertical"
-        android:background="?android:attr/actionBarItemBackground"
+        android:text="@string/txt_title"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
         app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
 </android.support.constraint.ConstraintLayout>

@@ -65,6 +65,7 @@
     <string name="activity_list">列表</string>
     <string name="activity_image">图片</string>
     <string name="activity_video">视频</string>
+    <string name="activity_webview">浏览器</string>
     <string name="activity_search">查找</string>
 
 </resources>

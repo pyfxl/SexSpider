@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -227,7 +229,7 @@ public class SiteActivity extends BaseActivity implements ISiteView {
         final Menu m = menu;
 
         final MenuItem searchItem = menu.findItem(R.id.action_search);
-        ImageView searchView = (ImageView)searchItem.getActionView();
+        ImageView searchView = (ImageView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

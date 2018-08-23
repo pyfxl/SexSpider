@@ -1,5 +1,6 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".list.ListActivity">
 
@@ -7,22 +8,22 @@
         android:id="@+id/action_download"
         android:title="@string/txt_menu_canceldown"
         android:orderInCategory="200"
-        android:showAsAction="always"
+        app:showAsAction="always"
         android:icon="@drawable/ic_action_download"
-        android:actionLayout="@layout/menu_download" />
+        app:actionLayout="@layout/menu_download" />
 
     <item
         android:id="@+id/action_viewdown"
         android:title="@string/txt_menu_viewalldown"
         android:orderInCategory="300"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:icon="@drawable/ic_action_view_off"
-        android:actionLayout="@layout/menu_view" />
+        app:actionLayout="@layout/menu_view" />
 
     <item
         android:id="@+id/action_jumptobottom"
         android:title="@string/txt_menu_jumptobottom"
         android:orderInCategory="400"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
 
 </menu>

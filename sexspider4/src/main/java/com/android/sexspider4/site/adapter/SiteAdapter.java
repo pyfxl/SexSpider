@@ -61,7 +61,7 @@ public class SiteAdapter extends RecyclerView.Adapter<SiteAdapter.ViewHolder> {
             holder.isUpdated.setText("");
         }
 
-        if (site.vipLevel == 0) {
+        if (site.IsVip()) {
             holder.title.setTextColor(context.getResources().getColor(R.color.site_vip_color));
             holder.isUpdated.setTextColor(context.getResources().getColor(R.color.site_vip_color));
         } else {
