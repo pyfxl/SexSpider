@@ -24,11 +24,7 @@ public class ListAccess extends BaseAccess {
 
     //查询所有已下载列表
     public List<ListBean> queryAllDown() {
-<<<<<<< HEAD
         String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, B.DocType, A.ListPicture, A.IsFavorite "
-=======
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite, B.SiteRank "
->>>>>>> 4ec9a09c7a9c14eb29ab5ea89f1058e23e781c9c
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE A.IsShow = 1 AND A.IsDown <> 0 ORDER BY A.ListTitle ASC, A.IsRead ASC";
 
         return queryByString(sql, null);
@@ -36,11 +32,7 @@ public class ListAccess extends BaseAccess {
 
     //查询所有列表
     public List<ListBean> queryAll() {
-<<<<<<< HEAD
         String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, B.DocType, A.ListPicture, A.IsFavorite "
-=======
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite, B.SiteRank "
->>>>>>> 4ec9a09c7a9c14eb29ab5ea89f1058e23e781c9c
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE B.IsUpdated <> 0 AND A.IsShow = 1 ORDER BY A.ListTitle ASC, A.IsRead ASC";
 
         return queryByString(sql, null);
@@ -48,11 +40,7 @@ public class ListAccess extends BaseAccess {
 
     //查询所有喜爱列表
     public List<ListBean> queryAllFavorite() {
-<<<<<<< HEAD
         String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, B.DocType, A.ListPicture, A.IsFavorite "
-=======
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite, B.SiteRank "
->>>>>>> 4ec9a09c7a9c14eb29ab5ea89f1058e23e781c9c
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE A.IsFavorite = 1 AND A.IsShow = 1 ORDER BY A.ListTitle ASC, A.IsRead ASC";
 
         return queryByString(sql, null);
@@ -60,11 +48,7 @@ public class ListAccess extends BaseAccess {
 
     //查询未下载推荐列表
     public List<ListBean> queryAllRecommend() {
-<<<<<<< HEAD
         String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, B.DocType, A.ListPicture, A.IsFavorite "
-=======
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite, B.SiteRank "
->>>>>>> 4ec9a09c7a9c14eb29ab5ea89f1058e23e781c9c
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE B.IsUpdated <> 0 AND A.IsShow = 1 AND (A.IsDown = 0 OR A.IsRead = 0) AND A.ListRank > 0 ORDER BY A.ListRank DESC, A.ListTitle ASC, A.IsRead ASC LIMIT 500 OFFSET 0";
 
         return queryByString(sql, null);
@@ -72,11 +56,7 @@ public class ListAccess extends BaseAccess {
 
     //查询所有推荐列表
     public List<ListBean> queryAllRecommendDown() {
-<<<<<<< HEAD
         String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, B.DocType, A.ListPicture, A.IsFavorite "
-=======
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite, B.SiteRank "
->>>>>>> 4ec9a09c7a9c14eb29ab5ea89f1058e23e781c9c
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE B.IsUpdated <> 0 AND A.IsShow = 1 AND A.ListRank > 0 ORDER BY A.ListRank DESC, A.ListTitle ASC, A.IsRead ASC LIMIT 500 OFFSET 0";
 
         return queryByString(sql, null);
@@ -84,11 +64,7 @@ public class ListAccess extends BaseAccess {
 
     //查询所有未读列表
     public List<ListBean> queryAllNotRead() {
-<<<<<<< HEAD
         String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, B.DocType, A.ListPicture, A.IsFavorite "
-=======
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite, B.SiteRank "
->>>>>>> 4ec9a09c7a9c14eb29ab5ea89f1058e23e781c9c
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE A.IsRead = 0 AND A.IsShow = 1 AND A.IsDown <> 0 ORDER BY A.ListTitle ASC, A.IsRead ASC";
 
         return queryByString(sql, null);
@@ -96,11 +72,7 @@ public class ListAccess extends BaseAccess {
 
     //根据siteId查询所有列表
     public List<ListBean> queryAllById(int siteId) {
-<<<<<<< HEAD
         String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, B.DocType, A.ListPicture, A.IsFavorite "
-=======
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite, B.SiteRank "
->>>>>>> 4ec9a09c7a9c14eb29ab5ea89f1058e23e781c9c
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE A.SiteID = ? ORDER BY A.ListNum ASC, A.ListID DESC";
 
         return queryByString(sql, new String[] { String.valueOf(siteId) });
@@ -108,11 +80,7 @@ public class ListAccess extends BaseAccess {
 
     //根据siteId查询所有下载列表
     public List<ListBean> queryAllDownById(int siteId) {
-<<<<<<< HEAD
         String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, B.DocType, A.ListPicture, A.IsFavorite, A.ListNotes "
-=======
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite, A.ListNotes, B.SiteRank "
->>>>>>> 4ec9a09c7a9c14eb29ab5ea89f1058e23e781c9c
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE A.SiteID = ? AND A.IsDown <> 0 ORDER BY A.ListNum ASC, A.ListID DESC";
 
         return queryByString(sql, new String[] { String.valueOf(siteId) });
@@ -121,11 +89,7 @@ public class ListAccess extends BaseAccess {
     //根据query查询所有列表
     public List<ListBean> queryIsShowByKey(String searchKey) {
         String key = "%" + searchKey + "%";
-<<<<<<< HEAD
         String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, B.DocType, A.ListPicture, A.IsFavorite "
-=======
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite, B.SiteRank "
->>>>>>> 4ec9a09c7a9c14eb29ab5ea89f1058e23e781c9c
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE B.IsUpdated <> 0 AND A.ListTitle LIKE ? AND A.IsShow = 1 ORDER BY A.ListTitle ASC, A.IsRead ASC";
 
         return queryByString(sql, new String[] { String.valueOf(key) });
@@ -134,11 +98,7 @@ public class ListAccess extends BaseAccess {
     //根据query查询所有下载列表
     public List<ListBean> queryIsDownByKey(String searchKey) {
         String key = "%" + searchKey + "%";
-<<<<<<< HEAD
         String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.MainDiv, B.ThumbDiv, B.PageDiv, B.PageFilter, B.PageLevel, B.SiteRank, B.SiteFilter, B.SiteReplace, B.DocType, A.ListPicture, A.IsFavorite "
-=======
-        String sql = "SELECT A.ListID, A.ListTitle, A.ListLink, A.SiteID, A.IsDown, A.IsDowning, A.IsShow, A.IsRead, A.IsNew, B.ImageDiv, B.ImageFilter, B.PageEncode, B.Domain, B.PageDiv, B.PageFilter, B.PageLevel, A.ListPicture, A.IsFavorite, B.SiteRank "
->>>>>>> 4ec9a09c7a9c14eb29ab5ea89f1058e23e781c9c
                 + "FROM " + TABLE_LIST + " A INNER JOIN " + TABLE_SITE + " B ON A.SiteID = B.SiteID WHERE A.ListTitle LIKE ? AND A.IsShow = 1 AND A.IsDown <> 0 ORDER BY A.ListTitle ASC, A.IsRead ASC";
 
         return queryByString(sql, new String[] { String.valueOf(key) });
