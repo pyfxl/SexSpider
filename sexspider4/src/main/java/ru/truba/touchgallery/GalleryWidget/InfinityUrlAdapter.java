@@ -1,6 +1,7 @@
 package ru.truba.touchgallery.GalleryWidget;
 
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -58,4 +59,4 @@ public class InfinityUrlAdapter extends BasePagerAdapter {
     public int getCount() {
         return TOTAL_PAGES * MIN_LOOPS;
     }
-}
+};

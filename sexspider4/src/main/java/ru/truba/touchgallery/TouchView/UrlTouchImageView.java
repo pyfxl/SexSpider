@@ -26,15 +26,12 @@ import android.widget.ImageView.ScaleType;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-import com.android.sexspider4.R;
-
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import com.android.sexspider4.R;
 import ru.truba.touchgallery.TouchView.InputStreamWrapper.InputStreamProgressListener;
-
-//import ru.truba.touchgallery.R;
 
 public class UrlTouchImageView extends RelativeLayout {
     protected ProgressBar mProgressBar;
@@ -97,7 +94,7 @@ public class UrlTouchImageView extends RelativeLayout {
                 conn.connect();
                 InputStream is = conn.getInputStream();
                 int totalLen = conn.getContentLength();
-                InputStreamWrapper bis = new InputStreamWrapper(is, 10240, totalLen);
+                InputStreamWrapper bis = new InputStreamWrapper(is, 20480, totalLen);
                 bis.setProgressListener(new InputStreamProgressListener()
 				{					
 					@Override
@@ -121,8 +118,8 @@ public class UrlTouchImageView extends RelativeLayout {
         	if (bitmap == null) 
         	{
         		mImageView.setScaleType(ScaleType.CENTER);
-                bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-                mImageView.setImageBitmap(bitmap);
+        		bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        		mImageView.setImageBitmap(bitmap);
         	}
         	else 
         	{

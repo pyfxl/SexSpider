@@ -113,11 +113,9 @@ public class SiteActivity extends BaseActivity implements ISiteView {
     //取列表数据
     private List<SiteBean> getLists() {
         progressBar.setVisibility(View.INVISIBLE);
+        emptyText.setVisibility(View.INVISIBLE);
         List<SiteBean> lists = sitePresenter.getLists();
-        if (lists.size() > 0){
-            emptyText.setVisibility(View.INVISIBLE);
-            progressBar.setVisibility(View.INVISIBLE);
-        } else {
+        if (lists.size() <= 0){
             swipeRefreshLayout.post(new Runnable() {
                 @Override
                 public void run() {
@@ -149,7 +147,6 @@ public class SiteActivity extends BaseActivity implements ISiteView {
     @Override
     public void setLists(List<SiteBean> lists) {
         if (lists.size() > 0) {
-            emptyText.setVisibility(View.INVISIBLE);
             this.lists.clear();
             this.lists.addAll(lists);
             adapter.notifyDataSetChanged();
@@ -200,11 +197,8 @@ public class SiteActivity extends BaseActivity implements ISiteView {
         SiteActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                progressBar.setVisibility(View.INVISIBLE);
                 if (lists.size() <= 0) {
                     emptyText.setVisibility(View.VISIBLE);
-                } else {
-                    emptyText.setVisibility(View.INVISIBLE);
                 }
                 swipeRefreshLayout.setRefreshing(false);
             }

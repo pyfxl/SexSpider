@@ -163,13 +163,16 @@ public class GalleryViewPager extends ViewPager {
     private boolean isAClick(float startX, float endX, float startY, float endY) {
         float differenceX = Math.abs(startX - endX);
         float differenceY = Math.abs(startY - endY);
-        return !(differenceX > CLICK_ACTION_THRESHHOLD/* =5 */ || differenceY > CLICK_ACTION_THRESHHOLD);
+        if (differenceX > CLICK_ACTION_THRESHHOLD/* =5 */ || differenceY > CLICK_ACTION_THRESHHOLD) {
+            return false;
+        }
+        return true;
     }
 
-    public interface OnItemClickListener {
-        void onItemClicked(View view, int position);
+    public static interface OnItemClickListener {
+        public void onItemClicked(View view, int position);
     }
 
     private final static int CLICK_ACTION_THRESHHOLD = 5;
     public void setOnItemClickListener(OnItemClickListener listener) { mOnItemClickListener = listener; }
-}
+};

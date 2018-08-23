@@ -89,11 +89,22 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/check-manifest" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
+<<<<<<< HEAD
+=======
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-classes" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-runtime-classes" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-safeguard" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-verifier" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-resources" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-support" />
+>>>>>>> 4ec9a09c7a9c14eb29ab5ea89f1058e23e781c9c
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaPrecompile" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/pre-dexed" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/prebuild" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/restart-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/shaders" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/splits-support" />
@@ -105,6 +116,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+<<<<<<< HEAD
     <orderEntry type="library" name="Gradle: __local_aars__:D.\fxlandroid\SexSpider\sexspider4\libs\java-client-4.1.2.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-solver:1.0.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-v4-22.2.1" level="project" />
@@ -112,11 +124,19 @@
     <orderEntry type="library" name="Gradle: __local_aars__:D.\fxlandroid\SexSpider\sexspider4\libs\selenium-server-3.0.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: __local_aars__:D.\fxlandroid\SexSpider\sexspider4\libs\selenium-java-2.48.2.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: __local_aars__:D.\fxlandroid\SexSpider\sexspider4\libs\selenium-java-client-driver-1.0.2.jar:unspecified@jar" level="project" />
+=======
+    <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-solver:1.0.2@jar" level="project" />
+>>>>>>> 4ec9a09c7a9c14eb29ab5ea89f1058e23e781c9c
     <orderEntry type="library" name="Gradle: com.android.support:support-annotations:22.2.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: __local_aars__:D.\fxlandroid\SexSpider\sexspider4\libs\IKAnalyzer2012FF_u1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:recyclerview-v7-22.2.1" level="project" />
     <orderEntry type="library" name="Gradle: org.jsoup:jsoup:1.10.2@jar" level="project" />
+<<<<<<< HEAD
     <orderEntry type="library" name="Gradle: cn.jzvd:jiaozivideoplayer-6.2.12" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:appcompat-v7-22.2.1" level="project" />
+=======
+    <orderEntry type="library" name="Gradle: com.android.support:support-v4-22.2.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-1.0.2" level="project" />
+>>>>>>> 4ec9a09c7a9c14eb29ab5ea89f1058e23e781c9c
   </component>
 </module>

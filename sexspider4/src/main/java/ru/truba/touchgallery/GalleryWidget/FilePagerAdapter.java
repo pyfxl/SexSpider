@@ -17,11 +17,11 @@
  */
 package ru.truba.touchgallery.GalleryWidget;
 
-import android.content.Context;
-import android.view.ViewGroup;
-
 import java.util.List;
 
+import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
 import ru.truba.touchgallery.TouchView.FileTouchImageView;
 
 /**
