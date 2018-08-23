@@ -33,12 +33,12 @@ import android.widget.TextView;
 import com.android.sexspider4.BaseActivity;
 import com.android.sexspider4.DividerItemDecoration;
 import com.android.sexspider4.MyApplication;
+import com.android.sexspider4.MyWebViewClient;
 import com.android.sexspider4.R;
 import com.android.sexspider4.helper.ImageHelper;
 import com.android.sexspider4.helper.SegHelper;
 import com.android.sexspider4.image.ImageActivity;
 import com.android.sexspider4.image.VideoActivity;
-import com.android.sexspider4.webview.WebViewActivity;
 import com.android.sexspider4.list.adapter.ListAdapter;
 import com.android.sexspider4.list.bean.ListBean;
 import com.android.sexspider4.list.listener.OnItemClickListener;
@@ -441,7 +441,7 @@ public class ListActivity extends BaseActivity implements IListView {
                     webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
                 }
                 webView.loadUrl(list.getListLink());
-                webView.setWebViewClient(new ListActivity.MyWebViewClient());
+                webView.setWebViewClient(new MyWebViewClient());
             }
         });
 
@@ -1038,36 +1038,6 @@ public class ListActivity extends BaseActivity implements IListView {
     //更新最新下载项
     protected void updateIsNew() {
         listPresenter.updateIsNew(site.siteId);
-    }
-
-    //网页
-    private class MyWebViewClient extends WebViewClient {
-        @Override
-        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-            super.onReceivedError(view, errorCode, description, failingUrl);
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
-            view.loadUrl("javascript:window.local_obj.showSource('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
-        }
-
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
-        }
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-
-        @Override
-        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            handler.proceed();
-        }
     }
 
     final class InJavaScriptLocalObj {
