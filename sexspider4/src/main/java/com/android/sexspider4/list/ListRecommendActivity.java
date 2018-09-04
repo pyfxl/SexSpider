@@ -26,11 +26,8 @@ public class ListRecommendActivity extends ListActivity implements IListView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //禁止下拉上拉事件
-        disableRefreshEvent();
-
-        //开启下拉刷新
-        //swipeRefreshLayout.setEnabled(true);
+        //禁用上拉刷新
+        disablePullEvent();
 
         //隐藏浮动按钮
         //floatView.setVisibility(View.VISIBLE);
@@ -65,20 +62,23 @@ public class ListRecommendActivity extends ListActivity implements IListView {
             }
         });
 
-        recommendViewOn();
+        //recommendViewOn();
 
         return true;
     }
 
     @Override
     public void viewOnMethod() {
-        List<ListBean> lists = listPresenter.getListsByRecommend();
+        List<ListBean> lists = listPresenter.getListsByRecommendDown();
         setLists(lists);
     }
 
     @Override
     public void viewOffMethod() {
-        List<ListBean> lists = listPresenter.getListsByRecommendDown();
+        //禁用上拉刷新
+        disablePullEvent();
+
+        List<ListBean> lists = listPresenter.getListsByRecommend();
         setLists(lists);
     }
 
@@ -93,9 +93,6 @@ public class ListRecommendActivity extends ListActivity implements IListView {
         //更新推荐权重
         updateRank();
     }
-
-    @Override
-    public void enableRefreshEvent() { }
 
     //更新推荐权重
     private void updateRank() {
@@ -135,7 +132,7 @@ public class ListRecommendActivity extends ListActivity implements IListView {
                 setLists(recommends);
 
                 //刷新完viewOn
-                recommendViewOn();
+                //recommendViewOn();
             }
         });
     }
@@ -151,4 +148,11 @@ public class ListRecommendActivity extends ListActivity implements IListView {
         swipeRefreshLayout.setEnabled(true);
     }
 
+    private void disablePullEvent() {
+        //禁止下拉上拉事件
+        disableRefreshEvent();
+
+        //开启下拉刷新
+        swipeRefreshLayout.setEnabled(true);
+    }
 }

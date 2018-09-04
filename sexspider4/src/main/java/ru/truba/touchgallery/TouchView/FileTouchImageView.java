@@ -44,28 +44,31 @@ public class FileTouchImageView extends UrlTouchImageView
         new ImageLoadTask().execute(imagePath);
     }
     //No caching load
-    public class ImageLoadTask extends UrlTouchImageView.ImageLoadTask
-    {
+    public class ImageLoadTask extends UrlTouchImageView.ImageLoadTask {
         @Override
         protected Bitmap doInBackground(String... strings) {
             String path = strings[0];
             Bitmap bm = null;
-            try {
-            	File file = new File(path);
-            	FileInputStream fis = new FileInputStream(file);
-                InputStreamWrapper bis = new InputStreamWrapper(fis, 20480, file.length());
-                bis.setProgressListener(new InputStreamProgressListener()
-				{					
-					@Override
-					public void onProgress(float progressValue, long bytesLoaded,
-							long bytesTotal)
-					{
-						publishProgress((int)(progressValue * 100));
-					}
-				});
-                bm = BitmapFactory.decodeStream(bis);
-                bis.close();
-            } catch (OutOfMemoryError e) {
+            try{
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                for (options.inSampleSize = 1; options.inSampleSize <= 32; options.inSampleSize+=2) {
+                    File file = new File(path);
+                    FileInputStream fis = new FileInputStream(file);
+                    InputStreamWrapper bis = new InputStreamWrapper(fis, 2048, file.length());
+                    bis.setProgressListener(new InputStreamProgressListener() {
+                        @Override
+                        public void onProgress(float progressValue, long bytesLoaded,
+                                               long bytesTotal) {
+                            publishProgress((int) (progressValue * 100));
+                        }
+                    });
+                    try {
+                        bm = BitmapFactory.decodeStream(bis, null, options);
+                        bis.close();
+                        break;
+                    } catch (OutOfMemoryError outOfMemoryError) {
+                    }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

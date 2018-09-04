@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
@@ -48,9 +47,6 @@
             android:label="@string/txt_title_search" />
         <activity
             android:name=".image.ImageActivity"
-            android:label="@string/activity_image" />
-        <activity
-            android:name=".webview.WebViewActivity"
             android:label="@string/activity_image" />
         <activity
             android:name=".image.VideoActivity"

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -21,15 +20,12 @@ import android.widget.TextView;
 import com.android.sexspider4.BaseActivity;
 import com.android.sexspider4.DividerItemDecoration;
 import com.android.sexspider4.R;
-import com.android.sexspider4.helper.ImageHelper;
 import com.android.sexspider4.list.ListActivity;
 import com.android.sexspider4.list.ListAllDownActivity;
 import com.android.sexspider4.list.ListFavoriteActivity;
 import com.android.sexspider4.list.ListNotReadActivity;
 import com.android.sexspider4.list.ListRecommendActivity;
 import com.android.sexspider4.list.ListSearchActivity;
-import com.android.sexspider4.list.presenter.IListPresenter;
-import com.android.sexspider4.list.presenter.ListPresenterImpl;
 import com.android.sexspider4.search.presenter.ISearchPresenter;
 import com.android.sexspider4.search.presenter.SearchPresenterImpl;
 import com.android.sexspider4.site.adapter.SiteAdapter;
@@ -38,12 +34,10 @@ import com.android.sexspider4.site.listener.OnItemClickListener;
 import com.android.sexspider4.site.presenter.ISitePresenter;
 import com.android.sexspider4.site.presenter.SitePresenterImpl;
 import com.android.sexspider4.site.view.ISiteView;
-import com.android.sexspider4.utils.FileUtils;
 
 import org.wltea.analyzer.cfg.DefaultConfig;
 import org.wltea.analyzer.dic.Dictionary;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -320,6 +314,7 @@ public class SiteActivity extends BaseActivity implements ISiteView {
                         for(int i=0, n=lists.size(); i<n; i++) {
                             SiteBean site = lists.get(i);
                             if(site == null) continue;
+                            site.loadLink = site.siteLink;
                             site.isFirst = 1;//指定第一页
                             sitePresenter.loadListDataBySite(site);
                         }
@@ -395,16 +390,6 @@ public class SiteActivity extends BaseActivity implements ISiteView {
     private void doViewNotRead() {
         Intent intent = new Intent(SiteActivity.this, ListNotReadActivity.class);
         startActivity(intent);
-    }
-
-    //写入日志
-    private void writeLog() {
-        try {
-            Process process = Runtime.getRuntime().exec("logcat -d -v time -s SEG");
-            FileUtils.writeFile("log.txt", process.getInputStream(), true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     //初始词典

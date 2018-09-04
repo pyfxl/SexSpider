@@ -13,8 +13,8 @@ public class ListBean {
     public String listPicture;
     public int isFavorite;
     public int listNum;
-    public int isDown;//0 未下载，1 下载完成，2 下载部分，3 下载失败
-    public int downStatus;//下载中的状态：0 未下载，1 下载完成，2 下载部分，3 下载失败
+    public int isDown;//0 未下载, 1 下载完成, 2 下载部分, 3 下载失败
+    public int downStatus;//下载中的状态: 0 未下载, 1 下载完成, 2 下载部分, 3 下载失败
     public int isDowning;
     public int isShow;
     public int isRead;

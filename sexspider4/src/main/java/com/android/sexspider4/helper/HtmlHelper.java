@@ -62,7 +62,7 @@ public class HtmlHelper {
         List<Map<String, String>> result = new ArrayList<>();
 
         //取网页内容
-        String str = HttpHelper.getStringFromLink(site.siteLink, site.pageEncode, site.domain);
+        String str = HttpHelper.getStringFromLink(site.loadLink, site.pageEncode, site.domain);
         if(str.equals("")) return result;
 
         //站点过滤
@@ -153,17 +153,11 @@ public class HtmlHelper {
     }
 
     //取图片内容
-    public static List<String> getImageArrayFromHtml(ListBean list) {
-        String html = HttpHelper.getStringFromLink(list.getListLink(), list.siteInfo.pageEncode, list.siteInfo.domain);
-        return getImageArrayFromHtml(list, html);
-    }
-
-    //取图片内容--html
     public static List<String> getImageArrayFromHtml(ListBean list, String html) {
         List<String> result = new ArrayList<>();
 
         //取网页内容
-        String str = html;
+        String str = html == "" ? HttpHelper.getStringFromLink(list.getListLink(), list.siteInfo.pageEncode, list.siteInfo.domain) : html;
         if (str.equals("")) return result;
 
         //站点过滤
@@ -232,10 +226,12 @@ public class HtmlHelper {
                 result.add(setLink(_link, domain, list.siteInfo.domain));
             }
 
-            //取总页数
-            content = doc.select(list.siteInfo.pageFilter);//取总页数filter
-            for (Element ele : content) {
-                list.listTotal = ele.html().replaceAll("[^\\d]", "");
+            if(!list.siteInfo.pageFilter.equals("")) {
+                //取总页数
+                content = doc.select(list.siteInfo.pageFilter);//取总页数filter
+                for (Element ele : content) {
+                    list.listTotal = ele.html().replaceAll("[^\\d]", "");
+                }
             }
         } catch(Exception e) {
             e.printStackTrace();

@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "sexspider4.db";
-    private static final int DB_VERSION = 7;
+    private static final int DB_VERSION = 9;
     private static final String SITE_TABLE = "SiteTable";
     private static final String LIST_TABLE = "ListTable";
     private static final String IMAGE_TABLE = "ImageTable";
@@ -91,6 +91,12 @@ class MySQLiteHelper extends SQLiteOpenHelper {
                 case 6:
                     db.execSQL("ALTER TABLE " + SITE_TABLE + " ADD COLUMN SiteReplace VARCHAR(1000) NULL");
                     break;
+                case 7:
+                    db.execSQL("ALTER TABLE " + SITE_TABLE + " ADD COLUMN LoadNum INTEGER DEFAULT 1");
+                    break;
+                case 8:
+                    db.execSQL("ALTER TABLE " + SITE_TABLE + " ADD COLUMN LoadLink VARCHAR(200) NULL");
+                    break;
             }
         }
     }
@@ -106,6 +112,7 @@ class MySQLiteHelper extends SQLiteOpenHelper {
                 + "PageEncode     VARCHAR(10)      NOT NULL, "
                 + "Domain         VARCHAR(50)      NOT NULL, "
                 + "SiteLink       VARCHAR(200)     NOT NULL, "
+                + "LoadLink       VARCHAR(200)     NULL, "
                 + "SiteFilter     VARCHAR(50)      NULL, "
                 + "SiteReplace    VARCHAR(1000)    NULL, "
                 + "MainDiv        VARCHAR(50)      NULL, "
@@ -118,6 +125,7 @@ class MySQLiteHelper extends SQLiteOpenHelper {
                 + "PageDiv        VARCHAR(50)      NULL, "
                 + "PageFilter     VARCHAR(50)      NULL, "
                 + "ListNum        INTEGER          DEFAULT 1, "
+                + "LoadNum        INTEGER          DEFAULT 1, "
                 + "IsUpdated      INTEGER          DEFAULT 0, "
                 + "IsDowning      INTEGER          DEFAULT 0, "
                 + "SiteDate       TIMESTAMP        DEFAULT (datetime('now', '+8 hour')), "

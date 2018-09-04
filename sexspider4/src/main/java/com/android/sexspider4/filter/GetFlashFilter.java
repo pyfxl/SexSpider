@@ -9,8 +9,7 @@ public class GetFlashFilter implements IFilter {
 
             int ePos = str.indexOf(".m3u8");
             int sPos = str.indexOf("video=");
-            String result = str.substring(sPos+6, ePos+5);
-            return result;
+            return str.substring(sPos+6, ePos+5);
         }catch(Exception e){
             e.printStackTrace();
         }

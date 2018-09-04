@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.app.AppCompatActivity;
 
 import com.android.sexspider4.helper.ImageHelper;
 import com.android.sexspider4.site.SiteActivity;
@@ -13,7 +14,7 @@ import com.android.sexspider4.site.SiteActivity;
  * Created by feng on 2017/5/5.
  */
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

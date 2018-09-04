@@ -100,13 +100,14 @@ public class ListModelImpl implements IListModel {
 
     @Override
     public void loadListDataBySite(final SiteBean site, final OnListDataLoadListener listener) {
-        Log.d("TAG", site.siteName + " -> " + site.siteLink);
+        Log.d("TAG", site.siteName + " -> " + site.loadLink);
         listener.onListLoadStart();
         listener.onListLoadProgress();
 
         listener.onListLoadStart(site);
 
         List<ListBean> newLists = new ArrayList<>();
+        RepeatListsClass repeatClass = new RepeatListsClass();
 
         //删除词典
         List<String> delDics = searchAccess.queryDicsByType(4);
@@ -116,7 +117,7 @@ public class ListModelImpl implements IListModel {
         List<Map<String, String>> lists = HtmlHelper.getListArrayFromHtml(site, delDics);
         for (Map<String, String> map : lists) {
             ListBean list = new ListBean();
-            list.listNum = (site.isFirst == 1 ? 1 : site.listNum);
+            list.listNum = site.isFirst == 1 ? site.loadNum : site.listNum;
             list.isDown = 0;
             list.isDowning = 0;
             list.isRead = 0;
@@ -135,7 +136,7 @@ public class ListModelImpl implements IListModel {
 
             //过滤重复项
             List<ListBean> listsAll = listAccess.queryAllById(site.siteId);
-            newLists = repeatNewLists(listsAll, newLists);
+            newLists = repeatNewLists(listsAll, newLists, repeatClass);
 
             //将不重复项插入db
             if (newLists.size() > 0) {
@@ -165,6 +166,14 @@ public class ListModelImpl implements IListModel {
                 listener.onListLoadNoUpdate();
             }
 
+            //更新已存在项
+            if (repeatClass.repeatLists.size() > 0) {
+                for (ListBean list : repeatClass.repeatLists) {
+                    list.listNum = site.loadNum;
+                    listAccess.update(list);
+                }
+            }
+
             if (site.isFirst == 0) {
                 site.listNum++;
             }
@@ -172,9 +181,12 @@ public class ListModelImpl implements IListModel {
             Log.d("TAG", site.siteName + " -> Success.");
         } else {
             site.isUpdated = 2;
+            if (site.listNum == 2) site.listNum = 3;//第1页失败从第2页开始
             listener.onListLoadError();
             Log.d("TAG", site.siteName + " -> Error!");
         }
+
+        if (site.isFirst == 1) site.loadNum++;
 
         siteAccess.update(site);
         listener.onListLoadEnd();
@@ -183,11 +195,12 @@ public class ListModelImpl implements IListModel {
     }
 
     //过滤列表重复
-    private List<ListBean> repeatNewLists(List<ListBean> listsAll, List<ListBean> newLists) {
+    private List<ListBean> repeatNewLists(List<ListBean> listsAll, List<ListBean> newLists, RepeatListsClass repeatClass) {
         for (ListBean list : listsAll) {
             for (ListBean newList : newLists) {
                 if (list.listTitle.equals(newList.listTitle)) {
                     newLists.remove(newList);
+                    repeatClass.repeatLists.add(list);
                     break;
                 }
             }
@@ -380,4 +393,7 @@ public class ListModelImpl implements IListModel {
         return images;
     }
 
+    class RepeatListsClass {
+        public List<ListBean> repeatLists = new ArrayList<>();
+    }
 }

@@ -42,9 +42,7 @@ public class SegHelper {
     }
 
     private static String removeString(String s) {
-        String str = s.replaceAll("\\d+[p|P|照片]", "");
-
-        return str;
+        return s.replaceAll("\\d+[p|P|照片|偷拍|自拍|原创|出品]", "");
     }
 
 }

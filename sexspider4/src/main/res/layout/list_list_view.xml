@@ -41,19 +41,6 @@
         android:layout_marginStart="@dimen/list_favorite_margin"
         android:layout_marginTop="@dimen/list_favorite_margin" />
 
-    <ImageView
-        android:src="@drawable/ic_action_video"
-        android:layout_width="@dimen/list_favorite_height"
-        android:layout_height="@dimen/list_favorite_height"
-        android:padding="@dimen/list_favorite_margin"
-        android:id="@+id/videoView"
-        android:visibility="gone"
-        android:contentDescription="@string/txt_image_thumb"
-        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-        android:layout_marginStart="@dimen/list_favorite_margin"
-        android:layout_marginTop="@dimen/list_favorite_margin" />
-
     <ProgressBar
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"

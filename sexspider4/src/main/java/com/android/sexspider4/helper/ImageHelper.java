@@ -65,19 +65,23 @@ public class ImageHelper {
     private static boolean saveImageFromBytes(ImageBean image, byte[] bytes) {
         try {
             File file = getFile(image);
-            if(!file.getParentFile().exists()) file.getParentFile().mkdirs();
+            if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
+
             FileOutputStream output = new FileOutputStream(file, false);
             output.write(bytes);
             output.close();
 
-            //检查下载的是否图片
-            Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
-            if (bitmap == null) return false;
+            try {
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+                if (bitmap != null) {
+                    //保存缩略图
+                    saveThumbImage(image);
+                    return true;
+                }
+            }catch (OutOfMemoryError outOfMemoryError){
+            }
 
-            //保存缩略图
-            saveThumbImage(image);
-
-            return true;
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -117,16 +121,19 @@ public class ImageHelper {
 
             File thumbFile = getFile(thumbImage);
             if(!thumbFile.getParentFile().exists()) thumbFile.getParentFile().mkdirs();
+
             FileOutputStream output = new FileOutputStream(thumbFile, false);
 
-            Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
-            if (bitmap == null) return;
-
-            bitmap = resizeBitmap(bitmap, MyApplication.getAppContext().getResources().getDimensionPixelSize(R.dimen.list_item_height));
-            if (bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)) {
-                output.flush();
+            try {
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+                if (bitmap != null) {
+                    bitmap = resizeBitmap(bitmap, MyApplication.getAppContext().getResources().getDimensionPixelSize(R.dimen.list_item_height));
+                    if (bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)) {
+                        output.flush();
+                    }
+                }
+            } catch (OutOfMemoryError outOfMemoryError) {
             }
-
             output.close();
         } catch (Exception e) {
             e.printStackTrace();

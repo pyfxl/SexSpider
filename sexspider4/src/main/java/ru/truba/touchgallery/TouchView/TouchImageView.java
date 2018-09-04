@@ -37,7 +37,7 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageView;
 
-@SuppressLint("NewApi")
+@SuppressLint({"NewApi", "AppCompatCustomView"})
 public class TouchImageView extends ImageView {
 
     private int positionForTouchImageView = -1;

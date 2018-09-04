@@ -1,23 +1,10 @@
 package com.android.sexspider4.image;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.util.Log;
 
-import com.android.sexspider4.BaseActivity;
 import com.android.sexspider4.R;
-import com.android.sexspider4.image.ImageActivity;
 import com.android.sexspider4.image.bean.ImageBean;
-import com.android.sexspider4.image.presenter.IImagePresenter;
-import com.android.sexspider4.image.presenter.ImagePresenterImpl;
 import com.android.sexspider4.image.view.IImageView;
 
 import java.util.List;
@@ -36,13 +23,14 @@ public class VideoActivity extends ImageActivity implements IImageView {
         setContentView(R.layout.activity_video);
     }
 
+    //视频播放器
     protected  void showImage(final List<ImageBean> images) {
-        //标题
-        textView.setText(title);
-        //视频播放器
         String videoUrl = images.get(0).imageLink;
+        textView.setText(videoUrl);
+
+        Log.d("TAG", videoUrl);
+
         if (!videoUrl.equals("")) {
-            //initPlayer(videoUrl);
             initJZVideo(videoUrl);
         }
     }

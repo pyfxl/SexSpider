@@ -67,7 +67,6 @@ public class ListActivity extends BaseActivity implements IListView {
     protected List<ListBean> lists;
     protected TextView emptyText;
     protected List<ListBean> downLists = new ArrayList<>();
-    protected String siteLink = "";
     protected ImageView floatView;
     protected ImageView floatView2;
     protected SwipeRefreshLayout swipeRefreshLayout;
@@ -87,6 +86,8 @@ public class ListActivity extends BaseActivity implements IListView {
     protected boolean isListEnd = false;
     protected boolean isLoadError = false;
     protected int isUpdated = 0;
+    protected int minNum = 0;
+    protected int maxNum = 0;
 
     //菜单
     protected ImageView refreshView;
@@ -124,7 +125,7 @@ public class ListActivity extends BaseActivity implements IListView {
         listPresenter.getSiteById(siteId);
         searchPresenter = new SearchPresenterImpl();
 
-        //更新最新下载项
+        //更新最新下载项，将当天最新下载项更新为正常
         updateIsNew();
 
         //列表recycler
@@ -242,8 +243,8 @@ public class ListActivity extends BaseActivity implements IListView {
     @Override
     public void setSiteBean(SiteBean site) {
         this.site = site;
-        this.site.isUpdated = getIntent().getIntExtra("isupdated", 0);
-        siteLink = site.siteLink;
+        site.isUpdated = getIntent().getIntExtra("isupdated", 0);
+        site.loadLink = site.loadLink == null ? site.siteLink : site.loadLink;
     }
 
     @Override
@@ -329,7 +330,12 @@ public class ListActivity extends BaseActivity implements IListView {
                 checkListsEmpty();
                 refreshStop();
                 setActionBar();
-                if (!isLoadError && site.isFirst==0 && loadFlag) continueLoad();
+                if (!isLoadError && site.isFirst == 0 && loadFlag) {
+                    continueLoad();
+                }
+                if (site.isFirst == 1 && loadFlag) {
+                    continueRepeat();
+                }
             }
         });
     }
@@ -702,6 +708,7 @@ public class ListActivity extends BaseActivity implements IListView {
         intent.putExtra("listid", list.listId);
         intent.putExtra("position", position);
         intent.putExtra("title", list.listTitle);
+        intent.putExtra("isfavorite", list.isFavorite);
         startActivityForResult(intent, FIRST_REQUEST_CODE);
     }
 
@@ -795,17 +802,17 @@ public class ListActivity extends BaseActivity implements IListView {
     //设置振动
     protected void setVibrator() {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(1300);
+        vibrator.vibrate(1500);
         vibrator.cancel();
     }
 
     //取下一页列表
     protected void setNextPageToSite() {
-        String link = siteLink.substring(0, siteLink.lastIndexOf("/") + 1);
+        String link = site.siteLink.substring(0, site.siteLink.lastIndexOf("/") + 1);
         if (site.lastStart != null && !site.lastStart.equals("")) {
-            site.siteLink = link + site.listPage.replace("(*)", String.valueOf(site.listNum-1)).replace("(%)", site.lastStart);
+            site.loadLink = link + site.listPage.replace("(*)", String.valueOf(site.listNum-1)).replace("(%)", site.lastStart);
         } else {
-            site.siteLink = link + site.listPage.replace("(*)", String.valueOf(site.listNum));
+            site.loadLink = link + site.listPage.replace("(*)", String.valueOf(site.listNum));
         }
     }
 
@@ -935,8 +942,11 @@ public class ListActivity extends BaseActivity implements IListView {
 
     //刷新第一页
     protected void doRefreshFirst() {
-        site.siteLink = siteLink;
+        minNum = 2;
+        maxNum = site.listNum - 1;
         site.isFirst = 1;
+        site.loadNum = 1;
+        site.loadLink = site.siteLink;
         doRefresh();
     }
 
@@ -967,6 +977,20 @@ public class ListActivity extends BaseActivity implements IListView {
         }
     }
 
+    //刷新第1页加载会重新加载小于页数的所有页，例如页数为10，下拉刷新时会加载1-10的所有页
+    protected void continueRepeat() {
+        if(minNum <= maxNum) {
+            String link = site.siteLink.substring(0, site.siteLink.lastIndexOf("/") + 1);
+            if (site.lastStart != null && !site.lastStart.equals("")) {
+                site.loadLink = link + site.listPage.replace("(*)", String.valueOf(minNum-1)).replace("(%)", site.lastStart);
+            } else {
+                site.loadLink = link + site.listPage.replace("(*)", String.valueOf(minNum));
+            }
+            minNum++;
+            doRefresh();
+        }
+    }
+
     //更新提示布局
     protected void updateTipsView() {
         int position = tipsList.size() - 1;
@@ -979,8 +1003,11 @@ public class ListActivity extends BaseActivity implements IListView {
 
         tipsImage.setVisibility(View.GONE);
         if (list.listPicture != null && !list.listPicture.equals("")) {
-            tipsImage.setImageBitmap(ImageHelper.getThumbImage(list));
-            tipsImage.setVisibility(View.VISIBLE);
+            Bitmap bitmap = ImageHelper.getThumbImage(list);
+            if(bitmap != null) {
+                tipsImage.setImageBitmap(ImageHelper.getThumbImage(list));
+                tipsImage.setVisibility(View.VISIBLE);
+            }
         }
         tipsText.setText(list.listTitle);
         tipsLayout.setVisibility(View.VISIBLE);

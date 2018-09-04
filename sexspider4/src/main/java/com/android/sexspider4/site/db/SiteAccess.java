@@ -91,6 +91,7 @@ public class SiteAccess extends BaseAccess {
         site.pageEncode = cursor.getString(cursor.getColumnIndex("PageEncode"));
         site.domain = cursor.getString(cursor.getColumnIndex("Domain"));
         site.siteLink = cursor.getString(cursor.getColumnIndex("SiteLink"));
+        site.loadLink = cursor.getString(cursor.getColumnIndex("LoadLink"));
         site.siteFilter = cursor.getString(cursor.getColumnIndex("SiteFilter"));
         site.siteReplace = cursor.getString(cursor.getColumnIndex("SiteReplace"));
         site.mainDiv = cursor.getString(cursor.getColumnIndex("MainDiv"));
@@ -103,6 +104,7 @@ public class SiteAccess extends BaseAccess {
         site.pageDiv = cursor.getString(cursor.getColumnIndex("PageDiv"));
         site.pageFilter = cursor.getString(cursor.getColumnIndex("PageFilter"));
         site.listNum = cursor.getInt(cursor.getColumnIndex("ListNum"));
+        site.loadNum = cursor.getInt(cursor.getColumnIndex("LoadNum"));
         site.isUpdated = cursor.getInt(cursor.getColumnIndex("IsUpdated"));
         site.isDowning = cursor.getInt(cursor.getColumnIndex("IsDowning"));
         site.docType = cursor.getString(cursor.getColumnIndex("DocType"));
@@ -122,6 +124,7 @@ public class SiteAccess extends BaseAccess {
         values.put("PageEncode", site.pageEncode);
         values.put("Domain", site.domain);
         values.put("SiteLink", site.siteLink);
+        values.put("LoadLink", site.loadLink);
         values.put("SiteFilter", site.siteFilter);
         values.put("SiteReplace", site.siteReplace);
         values.put("MainDiv", site.mainDiv);
@@ -134,6 +137,7 @@ public class SiteAccess extends BaseAccess {
         values.put("PageDiv", site.pageDiv);
         values.put("PageFilter", site.pageFilter);
         values.put("ListNum", site.listNum);
+        values.put("LoadNum", site.loadNum);
         values.put("IsUpdated", site.isUpdated);
         values.put("IsDowning", site.isDowning);
         values.put("SiteDate", DateUtils.getDateTime());

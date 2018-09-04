@@ -58,6 +58,8 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         ListBean list = lists.get(position);
+        //viewHolder.title.setText(list.siteInfo.siteRank + "." + list.listTitle);
+        //viewHolder.title.setText(list.listNum + "." + list.listTitle);
         viewHolder.title.setText(list.listTitle);
 
         if (list.loadNum > 0) {
@@ -75,19 +77,14 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
         }
 
+        viewHolder.favoriteView.setVisibility(View.GONE);
+        if (list.isFavorite == 1) {
+            viewHolder.favoriteView.setVisibility(View.VISIBLE);
+        }
+
         //视频标志
         if(list.siteInfo.IsVideo()) {
-            viewHolder.favoriteView.setVisibility(View.GONE);
-            viewHolder.videoView.setVisibility(View.VISIBLE);
-            if (list.isFavorite == 1) {
-                viewHolder.videoView.setBackgroundResource(R.drawable.bg_float);
-            }
-        } else {
-            viewHolder.videoView.setVisibility(View.GONE);
-            viewHolder.favoriteView.setVisibility(View.GONE);
-            if (list.isFavorite == 1) {
-                viewHolder.favoriteView.setVisibility(View.VISIBLE);
-            }
+            viewHolder.title.setText(viewHolder.title.getText() + " " + context.getString(R.string.txt_video));
         }
 
         if (list.isDowning == 1) {
@@ -132,7 +129,6 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView title;
         ImageView imageView;
         ImageView favoriteView;
-        ImageView videoView;
         ProgressBar progressBar;
         TextView loadNum;
 
@@ -141,7 +137,6 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             title = (TextView) itemView.findViewById(R.id.list_list_title);
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
             favoriteView = (ImageView) itemView.findViewById(R.id.favoriteView);
-            videoView = (ImageView) itemView.findViewById(R.id.videoView);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
             loadNum = (TextView) itemView.findViewById(R.id.textView);
         }
