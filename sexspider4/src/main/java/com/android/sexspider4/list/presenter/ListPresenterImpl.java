@@ -141,6 +141,11 @@ public class ListPresenterImpl implements IListPresenter, OnListDataLoadListener
     }
 
     @Override
+    public void onListLoadRepeat() {
+        listView.loadRepeat();
+    }
+
+    @Override
     public void onListLoadError() {
         listView.loadError();
     }

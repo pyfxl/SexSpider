@@ -174,6 +174,8 @@ public class ListModelImpl implements IListModel {
                 }
             }
 
+            listener.onListLoadRepeat();
+
             if (site.isFirst == 0) {
                 site.listNum++;
             }

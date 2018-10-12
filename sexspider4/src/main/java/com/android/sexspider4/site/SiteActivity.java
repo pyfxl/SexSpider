@@ -315,6 +315,7 @@ public class SiteActivity extends BaseActivity implements ISiteView {
                             SiteBean site = lists.get(i);
                             if(site == null) continue;
                             site.loadLink = site.siteLink;
+                            site.loadNum = 1;
                             site.isFirst = 1;//指定第一页
                             sitePresenter.loadListDataBySite(site);
                         }

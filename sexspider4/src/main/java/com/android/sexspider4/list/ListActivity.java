@@ -310,6 +310,16 @@ public class ListActivity extends BaseActivity implements IListView {
     }
 
     @Override
+    public void loadRepeat() {
+        ListActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
     public void loadError() {
         isLoadError = true;
         isUpdated = 2;

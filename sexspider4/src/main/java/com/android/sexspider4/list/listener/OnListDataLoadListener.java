@@ -15,6 +15,7 @@ public interface OnListDataLoadListener {
     void onListLoadSuccess();
     void onListLoadSuccess(List<ListBean> lists);
     void onListLoadNoUpdate();
+    void onListLoadRepeat();
     void onListLoadError();
     void onListLoadEnd();
     void onListLoadStart(SiteBean site);

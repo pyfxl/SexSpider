@@ -104,6 +104,11 @@ public class SitePresenterImpl implements ISitePresenter, OnSiteDataLoadListener
     }
 
     @Override
+    public void onListLoadRepeat() {
+
+    }
+
+    @Override
     public void onListLoadError() {
 
     }

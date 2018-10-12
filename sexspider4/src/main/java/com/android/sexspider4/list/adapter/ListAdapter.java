@@ -59,8 +59,8 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ViewHolder viewHolder = (ViewHolder) holder;
         ListBean list = lists.get(position);
         //viewHolder.title.setText(list.siteInfo.siteRank + "." + list.listTitle);
-        //viewHolder.title.setText(list.listNum + "." + list.listTitle);
-        viewHolder.title.setText(list.listTitle);
+        viewHolder.title.setText(list.listNum + ") " + list.listTitle);
+        //viewHolder.title.setText(list.listTitle);
 
         if (list.loadNum > 0) {
             viewHolder.loadNum.setText(String.valueOf(list.loadNum));

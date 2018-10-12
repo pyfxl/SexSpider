@@ -17,6 +17,7 @@ public interface IListView {
     void loadSuccess();
     void loadSuccess(List<ListBean> lists);
     void loadNoUpdate();
+    void loadRepeat();
     void loadError();
     void loadEnd();
     void downStart(int position);
