@@ -1022,6 +1022,11 @@ public class ListActivity extends BaseActivity implements IListView {
         tipsText.setText(list.listTitle);
         tipsLayout.setVisibility(View.VISIBLE);
 
+        //视频标志
+        if(list.siteInfo.IsVideo()) {
+            tipsText.setText(tipsText.getText() + " " + getString(R.string.txt_video));
+        }
+
         if (list.isDown == 2) {
             tipsText.setTextColor(this.getResources().getColor(R.color.list_hasdown));
         } else {

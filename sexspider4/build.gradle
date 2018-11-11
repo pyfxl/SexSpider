@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.android.sexspider4"
         minSdkVersion 22
         targetSdkVersion 22
-        versionCode 400
-        versionName '4.0.0'
+        versionCode 410
+        versionName '4.1.0'
     }
     buildTypes {
         release {

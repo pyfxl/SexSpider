@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "sexspider4.db";
-    private static final int DB_VERSION = 9;
+    private static final int DB_VERSION = 13;
     private static final String SITE_TABLE = "SiteTable";
     private static final String LIST_TABLE = "ListTable";
     private static final String IMAGE_TABLE = "ImageTable";
@@ -97,6 +97,19 @@ class MySQLiteHelper extends SQLiteOpenHelper {
                 case 8:
                     db.execSQL("ALTER TABLE " + SITE_TABLE + " ADD COLUMN LoadLink VARCHAR(200) NULL");
                     break;
+                case 9://更新此版本时，page没有处理，导致下载页数为0
+                    db.execSQL("DROP TABLE " + SITE_TABLE);
+                    createSiteTable(db);
+                    break;
+                case 10://处理page，默认为30
+                    db.execSQL("UPDATE " + SITE_TABLE + " SET LoadNum = 30");
+                    break;
+                case 11://处理page，默认为30
+                    db.execSQL("UPDATE " + SITE_TABLE + " SET ListNum = 30");
+                    break;
+                case 12://处理page，默认为30
+                    db.execSQL("UPDATE " + SITE_TABLE + " SET ListNum = 31");
+                    break;
             }
         }
     }
@@ -110,7 +123,7 @@ class MySQLiteHelper extends SQLiteOpenHelper {
                 + "SiteName       VARCHAR(50)      NOT NULL, "
                 + "ListPage       VARCHAR(200)     NOT NULL, "
                 + "PageEncode     VARCHAR(10)      NOT NULL, "
-                + "Domain         VARCHAR(50)      NOT NULL, "
+                + "Domain         VARCHAR(100)     NOT NULL, "
                 + "SiteLink       VARCHAR(200)     NOT NULL, "
                 + "LoadLink       VARCHAR(200)     NULL, "
                 + "SiteFilter     VARCHAR(50)      NULL, "
