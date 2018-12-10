@@ -114,7 +114,13 @@ public class ListModelImpl implements IListModel {
 
         //取列表数据
         String last = "";
-        List<Map<String, String>> lists = HtmlHelper.getListArrayFromHtml(site, delDics);
+        String html = "";
+
+        if(site.IsAjax()) {
+            html = listener.getHtmlByUrl(site.loadLink);//获取ajax页面html
+        }
+
+        List<Map<String, String>> lists = HtmlHelper.getListArrayFromHtml(site, delDics, html);
         for (Map<String, String> map : lists) {
             ListBean list = new ListBean();
             list.listNum = site.isFirst == 1 ? site.loadNum : site.listNum;
@@ -225,7 +231,7 @@ public class ListModelImpl implements IListModel {
         String html = "";
 
         if(list.siteInfo.IsAjax()) {
-            html = listener.getListHtml(list, position);//获取ajax页面html
+            html = listener.getHtmlByUrl(list.getListLink());//获取ajax页面html
         }
 
         List<ImageBean> images = getDownImages(list, html);

@@ -27,5 +27,6 @@ public interface IListView {
     void downError(int position);
     void downEnd(ListBean list, int position);
     void downCancel();
-    String getListHtml(ListBean list, int position);
+
+    String getHtmlByUrl(String loadUrl);
 }

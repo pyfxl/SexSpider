@@ -442,7 +442,7 @@ public class ListActivity extends BaseActivity implements IListView {
     }
 
     @Override
-    public String getListHtml(final ListBean list, int position) {
+    public String getHtmlByUrl(final String loadUrl) {
         listHtml = "";
         webFlag = false;
         ListActivity.this.runOnUiThread(new Runnable() {
@@ -456,7 +456,7 @@ public class ListActivity extends BaseActivity implements IListView {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
                 }
-                webView.loadUrl(list.getListLink());
+                webView.loadUrl(loadUrl);
                 webView.setWebViewClient(new MyWebViewClient());
             }
         });
@@ -1001,7 +1001,7 @@ public class ListActivity extends BaseActivity implements IListView {
         }
     }
 
-    //更新提示布局
+    //更新提示布局，与列表要一至。ListAdapter onBindViewHolder
     protected void updateTipsView() {
         int position = tipsList.size() - 1;
         if (position < 0) {
@@ -1019,7 +1019,7 @@ public class ListActivity extends BaseActivity implements IListView {
                 tipsImage.setVisibility(View.VISIBLE);
             }
         }
-        tipsText.setText(list.listTitle);
+        tipsText.setText(list.listNum + ") " + list.listTitle);
         tipsLayout.setVisibility(View.VISIBLE);
 
         //视频标志

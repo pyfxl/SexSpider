@@ -201,8 +201,8 @@ public class ListPresenterImpl implements IListPresenter, OnListDataLoadListener
     }
 
     @Override
-    public String getListHtml(ListBean list, int position) {
-        return listView.getListHtml(list, position);
+    public String getHtmlByUrl(String loadUrl) {
+        return listView.getHtmlByUrl(loadUrl);
     }
 
     @Override

@@ -15,5 +15,5 @@ public interface OnImageDownListener {
     void onDownEnd(ListBean list, int position);
     void onDownCancel();
 
-    String getListHtml(ListBean list, int position);
+    String getHtmlByUrl(String loadUrl);
 }

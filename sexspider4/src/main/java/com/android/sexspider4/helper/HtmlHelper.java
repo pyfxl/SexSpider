@@ -58,11 +58,11 @@ public class HtmlHelper {
     }
 
     //取列表数据
-    public static List<Map<String, String>> getListArrayFromHtml(SiteBean site, List<String> delDics) {
+    public static List<Map<String, String>> getListArrayFromHtml(SiteBean site, List<String> delDics, String html) {
         List<Map<String, String>> result = new ArrayList<>();
 
         //取网页内容
-        String str = HttpHelper.getStringFromLink(site.loadLink, site.pageEncode, site.domain);
+        String str = html == "" ? HttpHelper.getStringFromLink(site.loadLink, site.pageEncode, site.domain) : html;
         if(str.equals("")) return result;
 
         //站点过滤

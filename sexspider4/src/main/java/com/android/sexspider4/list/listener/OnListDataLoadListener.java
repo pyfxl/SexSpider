@@ -20,4 +20,6 @@ public interface OnListDataLoadListener {
     void onListLoadEnd();
     void onListLoadStart(SiteBean site);
     void onListLoadEnd(SiteBean site);
+
+    String getHtmlByUrl(String loadUrl);
 }

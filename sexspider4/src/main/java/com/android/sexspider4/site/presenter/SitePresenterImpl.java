@@ -127,4 +127,9 @@ public class SitePresenterImpl implements ISitePresenter, OnSiteDataLoadListener
     public void onListLoadEnd(SiteBean site) {
         siteView.listLoadEnd(site);
     }
+
+    @Override
+    public String getHtmlByUrl(String loadUrl) {
+        return "";
+    }
 }
